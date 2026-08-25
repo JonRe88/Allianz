@@ -56,6 +56,11 @@ module.exports = {
           '3': 'hsl(var(--chart-3))',
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
+        },
+        brand: {
+          charcoal: '#121212',
+          gold: '#B8860B',
+          sageLight: '#DCE3D2'
         }
       },
       keyframes: {
