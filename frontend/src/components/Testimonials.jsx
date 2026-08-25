@@ -1,73 +1,64 @@
 import { motion } from "framer-motion";
-import { IMAGES } from "@/data/products";
 
 const TESTIMONIALS = [
   {
     quote:
-      "Llevaba años posponiendo mi retiro. En una sola sesión entendí cuánto necesitaba aportar y hoy veo crecer mi plan cada mes.",
+      "Empecé mi PPR a los 32 con aportaciones pequeñas. Hoy, ver mi proyección de retiro me da una paz que no tiene precio.",
     name: "Mariana G.",
-    role: "Directora de marketing, CDMX",
+    role: "Arquitecta, 38 años · CDMX",
   },
   {
     quote:
-      "La deducibilidad fue lo que me convenció: ahorro para mi retiro y pago menos impuestos. La asesoría fue clara y sin presión.",
-    name: "Rodrigo T.",
-    role: "Arquitecto independiente, Guadalajara",
+      "La deducción de impuestos fue lo que me convenció. Cada abril el SAT me devuelve dinero por ahorrar para mí.",
+    name: "Ricardo T.",
+    role: "Ingeniero, 45 años · Monterrey",
   },
   {
     quote:
-      "Migré mi ahorro de una cuenta sin rendimiento a un PPR Balanceado. La diferencia proyectada a 20 años me dejó sin palabras.",
-    name: "Alejandra M.",
-    role: "Médica, Monterrey",
+      "Mi asesor Allianz me explicó todo sin letras chiquitas. Por fin siento que mi futuro está en mis manos.",
+    name: "Paola R.",
+    role: "Emprendedora, 35 años · Guadalajara",
   },
 ];
 
 export const Testimonials = () => (
-  <section data-testid="testimonials-section" className="border-t border-black/10 bg-white py-24 lg:py-32">
+  <section data-testid="testimonials-section" className="border-t border-black/10 bg-[#FAFAFA] py-24 lg:py-32">
     <div className="mx-auto max-w-7xl px-6 lg:px-10">
-      <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
-          className="lg:col-span-4"
-        >
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#003781]">Testimonios</p>
-          <h2 className="font-serif text-4xl font-light tracking-tighter text-[#0A0A0A] md:text-5xl">
-            Historias que ya empezaron.
-          </h2>
-          <div className="relative mt-12 hidden overflow-hidden lg:block">
-            <div className="absolute -left-4 -top-4 h-full w-full bg-[#003781]/10" aria-hidden="true" />
-            <img
-              src={IMAGES.retirement}
-              alt="Pareja disfrutando su retiro"
-              data-testid="testimonials-image"
-              className="relative aspect-[4/3] w-full object-cover"
-            />
-          </div>
-        </motion.div>
-        <div className="lg:col-span-8">
-          {TESTIMONIALS.map((t, i) => (
-            <motion.blockquote
-              key={t.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              className="border-t border-black/10 py-10 first:border-t-0 first:pt-0 md:py-12"
-              data-testid={`testimonial-${i}`}
-            >
-              <p className="max-w-2xl font-serif text-xl font-light italic leading-relaxed tracking-tight text-[#0A0A0A] md:text-2xl">
-                “{t.quote}”
-              </p>
-              <footer className="mt-6">
-                <p className="text-sm font-semibold text-[#003781]">{t.name}</p>
-                <p className="text-xs uppercase tracking-widest text-neutral-500">{t.role}</p>
-              </footer>
-            </motion.blockquote>
-          ))}
-        </div>
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.8 }}
+        className="mb-16"
+      >
+        <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#003781]">Historias reales</p>
+        <h2 className="font-serif text-4xl font-light tracking-tighter text-[#0A0A0A] md:text-6xl">
+          Ellos ya empezaron <em className="font-normal text-[#003781]">su hoy.</em>
+        </h2>
+      </motion.div>
+      <div className="grid grid-cols-1 gap-px border border-black/10 bg-black/10 md:grid-cols-3">
+        {TESTIMONIALS.map((t, i) => (
+          <motion.figure
+            key={t.name}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, delay: i * 0.1 }}
+            className="flex h-full flex-col bg-white p-10 transition-colors duration-500 hover:bg-[#003781] lg:p-12"
+            data-testid={`testimonial-${i}`}
+          >
+            <span className="font-serif text-6xl font-light leading-none text-[#003781]/20" aria-hidden="true">
+              “
+            </span>
+            <blockquote className="mt-4 flex-1 font-serif text-lg font-light leading-relaxed tracking-tight text-[#0A0A0A] transition-colors duration-500 md:text-xl">
+              {t.quote}
+            </blockquote>
+            <figcaption className="mt-10 border-t border-black/10 pt-6">
+              <p className="text-sm font-semibold text-[#003781]">{t.name}</p>
+              <p className="mt-1 text-xs uppercase tracking-widest text-neutral-500">{t.role}</p>
+            </figcaption>
+          </motion.figure>
+        ))}
       </div>
     </div>
   </section>

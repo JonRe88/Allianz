@@ -22,6 +22,7 @@ Landing page premium estilo Awwwards para asesor Allianz independiente en Méxic
 ## Implementado
 - 2026-08-25: Iteración completa construida desde cero — landing (hero cinético con parallax, marquee lento, manifiesto 01–04, simulador + PDF + leyenda de servicios, grid de servicios, testimonios, formulario, footer), 4 páginas de producto compartiendo ProductPage, modal de citas, panel /prospectos con auth JWT + lockout + CSV, emails al owner vía Resend gestionado (verificado 202 Accepted), seed de admin idempotente.
 - 2026-08-25 (Iteración 5): WhatsApp real (+52 595 106 9096) en CTAs; gráfica de área animada (recharts) en el simulador con saldo vs aportado; recordatorio automático de cita al owner un día antes (loop horario en backend, tz America/Mexico_City, marca reminder_sent — verificado con cita de prueba); filtros en /prospectos (búsqueda texto, interés, fecha + limpiar filtros).
+- 2026-08-25 (Iteración 6): Logo XIMNANZAS real en header y footer; tira de logos institucionales (Allianz Distribuidor Autorizado, AMIB, CNSF) antes del footer; Testimonios rediseñados ("Ellos ya empezaron su hoy", 3 tarjetas con copy del cliente); nueva sección Preguntas Frecuentes con acordeón (6 Q&A PPR) y CTA de WhatsApp.
 
 ## Backlog
 - P1: Selector de edad de retiro, recordatorio de cita por WhatsApp.

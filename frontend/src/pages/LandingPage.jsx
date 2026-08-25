@@ -7,6 +7,8 @@ import { Manifesto } from "@/components/Manifesto";
 import { Simulator } from "@/components/Simulator";
 import { ServicesGrid } from "@/components/ServicesGrid";
 import { Testimonials } from "@/components/Testimonials";
+import { FAQ } from "@/components/FAQ";
+import { LogoStrip } from "@/components/LogoStrip";
 import { LeadForm } from "@/components/LeadForm";
 import { Footer } from "@/components/Footer";
 import { AppointmentDialog } from "@/components/AppointmentDialog";
@@ -36,7 +38,9 @@ export default function LandingPage() {
         <Simulator onAgenda={openAgenda} />
         <ServicesGrid />
         <Testimonials />
+        <FAQ />
         <LeadForm />
+        <LogoStrip />
       </main>
       <Footer />
       <AppointmentDialog open={agendaOpen} onOpenChange={setAgendaOpen} />
