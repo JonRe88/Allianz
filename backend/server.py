@@ -14,6 +14,9 @@ from html import escape
 from html.parser import HTMLParser
 from urllib.parse import urlparse
 
+import asyncio
+from zoneinfo import ZoneInfo
+
 import bcrypt
 import jwt
 import httpx
@@ -370,11 +373,46 @@ app.add_middleware(
 )
 
 
+MX_TZ = ZoneInfo("America/Mexico_City")
+
+
+async def send_due_reminders():
+    tomorrow = (datetime.now(MX_TZ) + timedelta(days=1)).date().isoformat()
+    cursor = db.appointments.find({"date": tomorrow, "reminder_sent": {"$ne": True}})
+    async for appt in cursor:
+        try:
+            await send_email(
+                to=OWNER_EMAIL,
+                subject="Recordatorio: cita de mañana — XIMNANZAS",
+                html=_email_table([
+                    ("Tipo", "Recordatorio de cita (mañana)"),
+                    ("Nombre", appt["name"]),
+                    ("Teléfono", appt["phone"]),
+                    ("Fecha", appt["date"]),
+                    ("Hora", appt["time"]),
+                ]),
+            )
+            await db.appointments.update_one({"id": appt["id"]}, {"$set": {"reminder_sent": True}})
+            logger.info("Reminder sent for appointment %s", appt["id"])
+        except Exception as e:
+            logger.error("Reminder email failed for %s: %s", appt.get("id"), e)
+
+
+async def reminder_loop():
+    while True:
+        try:
+            await send_due_reminders()
+        except Exception as e:
+            logger.error("Reminder loop error: %s", e)
+        await asyncio.sleep(3600)
+
+
 @app.on_event("startup")
 async def startup():
     await db.users.create_index("email", unique=True)
     await db.login_attempts.create_index("identifier")
     await seed_admin()
+    asyncio.create_task(reminder_loop())
 
 
 @app.on_event("shutdown")

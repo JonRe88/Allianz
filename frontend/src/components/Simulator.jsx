@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { ArrowUpRight, CalendarDays, Download } from "lucide-react";
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Slider } from "@/components/ui/slider";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RISK_PROFILES, PRODUCT_LIST, IMAGES } from "@/data/products";
@@ -182,6 +183,62 @@ export const Simulator = ({ onAgenda }) => {
                 <p data-testid="total-contributed" className="mt-3 font-serif text-4xl font-light tracking-tight text-white/70 md:text-5xl">
                   {fmtMXN(final.contributed)}
                 </p>
+              </div>
+            </div>
+
+            <div className="mt-10 border border-white/15 p-6" data-testid="projection-chart">
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50">
+                Crecimiento proyectado
+              </p>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={projection} margin={{ top: 5, right: 5, left: 5, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="saldoGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#ffffff" stopOpacity={0.45} />
+                        <stop offset="100%" stopColor="#ffffff" stopOpacity={0.02} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+                    <XAxis
+                      dataKey="age"
+                      tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <YAxis
+                      tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
+                      tickLine={false}
+                      axisLine={false}
+                      width={56}
+                      tickFormatter={(v) => `$${(v / 1000000).toFixed(1)}M`}
+                    />
+                    <Tooltip
+                      formatter={(v) => fmtMXN(v)}
+                      labelFormatter={(a) => `Edad ${a} años`}
+                      contentStyle={{ background: "#003781", border: "none", fontSize: 12 }}
+                      itemStyle={{ color: "#fff" }}
+                      labelStyle={{ color: "rgba(255,255,255,0.65)" }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="balance"
+                      name="Saldo proyectado"
+                      stroke="#ffffff"
+                      strokeWidth={2}
+                      fill="url(#saldoGrad)"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="contributed"
+                      name="Aportado acumulado"
+                      stroke="rgba(255,255,255,0.4)"
+                      strokeWidth={1.5}
+                      strokeDasharray="4 4"
+                      fill="transparent"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
             </div>
 
