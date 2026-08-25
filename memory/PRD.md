@@ -21,15 +21,13 @@ Landing page premium estilo Awwwards para asesor Allianz independiente en Méxic
 
 ## Implementado
 - 2026-08-25: Iteración completa construida desde cero — landing (hero cinético con parallax, marquee lento, manifiesto 01–04, simulador + PDF + leyenda de servicios, grid de servicios, testimonios, formulario, footer), 4 páginas de producto compartiendo ProductPage, modal de citas, panel /prospectos con auth JWT + lockout + CSV, emails al owner vía Resend gestionado (verificado 202 Accepted), seed de admin idempotente.
-- 2026-08-25 (Iteración 5): WhatsApp real (+52 595 106 9096) en CTAs; gráfica de área animada (recharts) en el simulador con saldo vs aportado; recordatorio automático de cita al owner un día antes (loop horario en backend, tz America/Mexico_City, marca reminder_sent — verificado con cita de prueba); filtros en /prospectos (búsqueda texto, interés, fecha + limpiar filtros).
-- 2026-08-25 (Iteración 6): Logo XIMNANZAS real en header y footer; tira de logos institucionales (Allianz Distribuidor Autorizado, AMIB, CNSF) antes del footer; Testimonios rediseñados ("Ellos ya empezaron su hoy", 3 tarjetas con copy del cliente); nueva sección Preguntas Frecuentes con acordeón (6 Q&A PPR) y CTA de WhatsApp.
-- 2026-08-25 (Iteración 7): Hero reemplazado por el diseño de Figma del cliente — full-screen oscuro charcoal, foto de pareja con parallax, "Tu retiro empieza hoy." con reveal enmascarado, acento gold (#B8860B), "PPR" gigante con stroke dorado, stats (+130 años / Art. 151 / 100%), indicador de scroll; tokens brand-charcoal/gold/sageLight + clases overline-label/noise-overlay/text-stroke-gold añadidos al sistema.
 
 ## Backlog
-- P1: Selector de edad de retiro, recordatorio de cita por WhatsApp.
-- P2: Multi-asesor con asignación de leads, exportar CSV de citas, envío de proyección PDF por email al prospecto.
+- P0: Número real de WhatsApp (actual es placeholder 5215500000000).
+- P1: Gráfica de área en el simulador (recharts), selector de edad de retiro, recordatorio de cita por email.
+- P2: Multi-asesor con asignación de leads, filtros/búsqueda en el panel, envío de proyección PDF por email al prospecto.
 
 ## Próximas tareas
-1. Exportar CSV también de citas.
-2. Recordatorio de cita por WhatsApp.
-3. Selector de edad de retiro en el simulador.
+1. Sustituir número de WhatsApp placeholder por el real.
+2. Añadir gráfica de crecimiento al simulador.
+3. Filtros por interés/fecha en /prospectos.

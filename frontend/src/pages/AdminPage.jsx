@@ -7,14 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { api } from "@/lib/api";
 
-const INTERESTS = [
-  "Plan Personal de Retiro",
-  "Seguro de Vida",
-  "Inversión Inteligente",
-  "Gastos Médicos Mayores",
-  "Auto y Hogar",
-];
-
 const toCSV = (rows) =>
   rows.map((r) => r.map((c) => `"${String(c ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
 
@@ -38,17 +30,6 @@ export default function AdminPage() {
   const [leads, setLeads] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [tab, setTab] = useState("leads");
-  const [search, setSearch] = useState("");
-  const [interestFilter, setInterestFilter] = useState("todos");
-  const [dateFilter, setDateFilter] = useState("");
-
-  const filteredLeads = leads.filter((l) => {
-    const q = search.trim().toLowerCase();
-    const matchQ = !q || [l.name, l.email, l.phone].some((v) => (v || "").toLowerCase().includes(q));
-    const matchI = interestFilter === "todos" || l.interest === interestFilter;
-    const matchD = !dateFilter || (l.created_at || "").startsWith(dateFilter);
-    return matchQ && matchI && matchD;
-  });
 
   useEffect(() => {
     api
@@ -216,51 +197,6 @@ export default function AdminPage() {
           )}
         </div>
 
-        {tab === "leads" && (
-          <div className="mt-6 flex flex-wrap items-center gap-3" data-testid="leads-filters">
-            <Input
-              data-testid="filter-search-input"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar por nombre, email o teléfono…"
-              className="w-72 rounded-none"
-            />
-            <select
-              data-testid="filter-interest-select"
-              value={interestFilter}
-              onChange={(e) => setInterestFilter(e.target.value)}
-              className="h-9 border border-input bg-transparent px-3 text-sm outline-none focus:border-[#003781]"
-            >
-              <option value="todos">Todos los intereses</option>
-              {INTERESTS.map((i) => (
-                <option key={i} value={i}>
-                  {i}
-                </option>
-              ))}
-            </select>
-            <Input
-              data-testid="filter-date-input"
-              type="date"
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-              className="w-44 rounded-none"
-            />
-            {(search || interestFilter !== "todos" || dateFilter) && (
-              <button
-                data-testid="clear-filters-button"
-                onClick={() => {
-                  setSearch("");
-                  setInterestFilter("todos");
-                  setDateFilter("");
-                }}
-                className="text-xs font-semibold uppercase tracking-widest text-[#003781] hover:underline"
-              >
-                Limpiar filtros
-              </button>
-            )}
-          </div>
-        )}
-
         <div className="mt-6 overflow-x-auto border border-black/10 bg-white" data-testid="admin-table-wrapper">
           {tab === "leads" ? (
             <Table data-testid="leads-table">
@@ -275,14 +211,14 @@ export default function AdminPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredLeads.length === 0 && (
+                {leads.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={6} className="py-10 text-center text-sm text-neutral-500" data-testid="leads-empty">
-                      No hay prospectos que coincidan.
+                      Aún no hay prospectos.
                     </TableCell>
                   </TableRow>
                 )}
-                {filteredLeads.map((l) => (
+                {leads.map((l) => (
                   <TableRow key={l.id}>
                     <TableCell className="font-medium">{l.name}</TableCell>
                     <TableCell>{l.email}</TableCell>

@@ -1,5 +1,5 @@
 export const WHATSAPP_URL =
-  "https://wa.me/525951069096?text=Hola%2C%20quiero%20asesor%C3%ADa%20sobre%20los%20servicios%20de%20XIMNANZAS";
+  "https://wa.me/5215500000000?text=Hola%2C%20quiero%20asesor%C3%ADa%20sobre%20los%20servicios%20de%20XIMNANZAS";
 
 export const IMAGES = {
   advisor:

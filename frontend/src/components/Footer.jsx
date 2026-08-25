@@ -6,7 +6,7 @@ export const Footer = () => (
     <div className="mx-auto max-w-7xl px-6 lg:px-10">
       <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
-          <img src="/logos/ximnanzas.png" alt="XIMNANZAS" data-testid="footer-logo" className="h-12 w-auto object-contain" />
+          <p className="font-serif text-3xl font-bold tracking-tight">XIMNANZAS</p>
           <p className="mt-4 max-w-sm text-sm font-light leading-relaxed text-white/50">
             Asesor independiente Allianz en México. Estrategias de retiro, protección e inversión con respaldo
             internacional.
