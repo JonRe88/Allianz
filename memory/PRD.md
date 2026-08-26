@@ -24,6 +24,7 @@ Landing page premium estilo Awwwards para asesor Allianz independiente en Méxic
 - 2026-08-25 (Iteración 5): WhatsApp real (+52 595 106 9096) en CTAs; gráfica de área animada (recharts) en el simulador con saldo vs aportado; recordatorio automático de cita al owner un día antes (loop horario en backend, tz America/Mexico_City, marca reminder_sent — verificado con cita de prueba); filtros en /prospectos (búsqueda texto, interés, fecha + limpiar filtros).
 - 2026-08-25 (Iteración 6): Logo XIMNANZAS real en header y footer; tira de logos institucionales (Allianz Distribuidor Autorizado, AMIB, CNSF) antes del footer; Testimonios rediseñados ("Ellos ya empezaron su hoy", 3 tarjetas con copy del cliente); nueva sección Preguntas Frecuentes con acordeón (6 Q&A PPR) y CTA de WhatsApp.
 - 2026-08-25 (Iteración 7): Hero reemplazado por el diseño de Figma del cliente — full-screen oscuro charcoal, foto de pareja con parallax, "Tu retiro empieza hoy." con reveal enmascarado, acento gold (#B8860B), "PPR" gigante con stroke dorado, stats (+130 años / Art. 151 / 100%), indicador de scroll; tokens brand-charcoal/gold/sageLight + clases overline-label/noise-overlay/text-stroke-gold añadidos al sistema.
+- 2026-08-26: Tira de logos institucionales movida justo debajo del hero (antes estaba antes del footer).
 
 ## Backlog
 - P1: Selector de edad de retiro, recordatorio de cita por WhatsApp.

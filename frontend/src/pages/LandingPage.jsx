@@ -33,6 +33,7 @@ export default function LandingPage() {
       <Header onAgenda={openAgenda} />
       <main>
         <Hero onAgenda={openAgenda} />
+        <LogoStrip />
         <Marquee />
         <Manifesto />
         <Simulator onAgenda={openAgenda} />
@@ -40,7 +41,6 @@ export default function LandingPage() {
         <Testimonials />
         <FAQ />
         <LeadForm />
-        <LogoStrip />
       </main>
       <Footer />
       <AppointmentDialog open={agendaOpen} onOpenChange={setAgendaOpen} />
