@@ -41,7 +41,7 @@ export const LeadForm = () => {
   };
 
   return (
-    <section id="contacto" data-testid="lead-form-section" className="grain relative bg-[#003781] py-24 text-white lg:py-32">
+    <section id="contacto" data-testid="lead-form-section" className="grain relative bg-[#3D1A4E] py-24 text-white lg:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-6 lg:grid-cols-12 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -98,7 +98,7 @@ export const LeadForm = () => {
               data-testid="lead-interest-select"
               value={form.interest}
               onChange={set("interest")}
-              className="h-9 w-full border border-input bg-transparent px-3 text-sm outline-none focus:border-[#003781]"
+              className="h-9 w-full border border-input bg-transparent px-3 text-sm outline-none focus:border-[#3D1A4E]"
             >
               {INTERESTS.map((i) => (
                 <option key={i} value={i}>
@@ -122,7 +122,7 @@ export const LeadForm = () => {
             data-testid="lead-submit-button"
             type="submit"
             disabled={loading}
-            className="mt-8 w-full rounded-none bg-[#003781] py-6 text-xs font-semibold uppercase tracking-widest hover:bg-[#00255A] sm:w-auto sm:px-12"
+            className="mt-8 w-full rounded-none bg-[#3D1A4E] py-6 text-xs font-semibold uppercase tracking-widest hover:bg-[#6B3F8A] sm:w-auto sm:px-12"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             Quiero que me contacten

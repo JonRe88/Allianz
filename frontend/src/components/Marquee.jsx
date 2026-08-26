@@ -16,7 +16,7 @@ export const Marquee = () => (
         <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1}>
           {ITEMS.map((item) => (
             <span key={`${copy}-${item}`} className="flex items-center">
-              <span className="whitespace-nowrap px-10 font-serif text-3xl font-light italic tracking-tight text-[#003781] md:text-4xl">
+              <span className="whitespace-nowrap px-10 font-serif text-3xl font-light italic tracking-tight text-[#3D1A4E] md:text-4xl">
                 {item}
               </span>
               <Asterisk className="h-6 w-6 shrink-0 text-neutral-300" />

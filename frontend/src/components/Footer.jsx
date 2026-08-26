@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { PRODUCT_LIST } from "@/data/products";
 
 export const Footer = () => (
-  <footer data-testid="site-footer" className="bg-[#0A0A0A] py-16 text-white">
+  <footer data-testid="site-footer" className="bg-[#1E1E2E] py-16 text-white">
     <div className="mx-auto max-w-7xl px-6 lg:px-10">
       <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
         <div className="md:col-span-5">

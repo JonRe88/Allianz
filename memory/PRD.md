@@ -25,6 +25,7 @@ Landing page premium estilo Awwwards para asesor Allianz independiente en Méxic
 - 2026-08-25 (Iteración 6): Logo XIMNANZAS real en header y footer; tira de logos institucionales (Allianz Distribuidor Autorizado, AMIB, CNSF) antes del footer; Testimonios rediseñados ("Ellos ya empezaron su hoy", 3 tarjetas con copy del cliente); nueva sección Preguntas Frecuentes con acordeón (6 Q&A PPR) y CTA de WhatsApp.
 - 2026-08-25 (Iteración 7): Hero reemplazado por el diseño de Figma del cliente — full-screen oscuro charcoal, foto de pareja con parallax, "Tu retiro empieza hoy." con reveal enmascarado, acento gold (#B8860B), "PPR" gigante con stroke dorado, stats (+130 años / Art. 151 / 100%), indicador de scroll; tokens brand-charcoal/gold/sageLight + clases overline-label/noise-overlay/text-stroke-gold añadidos al sistema.
 - 2026-08-26: Tira de logos institucionales movida justo debajo del hero (antes estaba antes del footer).
+- 2026-08-26 (Iteración 8): Retemado completo a la paleta oficial de marca XIMNANZAS — Ciruela Profundo #3D1A4E (primario, reemplaza azul Allianz), Ciruela Medio #6B3F8A (hovers), Carbón Oscuro #1E1E2E (hero, simulador, login admin, footer), Crema Cálido #FAF7F2 (fondos claros), Dorado Aspiracional #B8850A (CTA hero + itálicas de énfasis en Testimonios/FAQ), Salvia Claro #D8F0E5 (texto sobre oscuro). Tokens Tailwind brand y CSS vars actualizados; PDF del simulador con encabezado ciruela.
 
 ## Backlog
 - P1: Selector de edad de retiro, recordatorio de cita por WhatsApp.

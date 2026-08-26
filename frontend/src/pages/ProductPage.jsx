@@ -28,7 +28,7 @@ export default function ProductPage({ product }) {
                 <Link
                   to="/"
                   data-testid="product-back-link"
-                  className="mb-10 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-neutral-500 transition-colors hover:text-[#003781]"
+                  className="mb-10 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-neutral-500 transition-colors hover:text-[#3D1A4E]"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Volver al inicio
@@ -37,7 +37,7 @@ export default function ProductPage({ product }) {
               <h1 className="font-serif text-5xl font-light leading-[1.05] tracking-tighter text-[#0A0A0A] md:text-7xl">
                 <MaskedLine delay={0.1}>{product.title}</MaskedLine>
                 <MaskedLine delay={0.25}>
-                  <em className="text-2xl font-normal not-italic text-[#003781] md:text-4xl">{product.tagline}</em>
+                  <em className="text-2xl font-normal not-italic text-[#3D1A4E] md:text-4xl">{product.tagline}</em>
                 </MaskedLine>
               </h1>
               <motion.p
@@ -59,7 +59,7 @@ export default function ProductPage({ product }) {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 bg-[#003781] px-8 py-4 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#00255A]"
+                  className="inline-flex items-center gap-3 bg-[#3D1A4E] px-8 py-4 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#6B3F8A]"
                 >
                   <MessageCircle className="h-4 w-4" />
                   WhatsApp directo
@@ -67,7 +67,7 @@ export default function ProductPage({ product }) {
                 <button
                   data-testid="product-agenda-button"
                   onClick={() => setAgendaOpen(true)}
-                  className="inline-flex items-center gap-3 border border-[#003781]/30 px-8 py-4 text-xs font-semibold uppercase tracking-widest text-[#003781] transition-colors hover:border-[#003781] hover:bg-[#003781] hover:text-white"
+                  className="inline-flex items-center gap-3 border border-[#3D1A4E]/30 px-8 py-4 text-xs font-semibold uppercase tracking-widest text-[#3D1A4E] transition-colors hover:border-[#3D1A4E] hover:bg-[#3D1A4E] hover:text-white"
                 >
                   <CalendarDays className="h-4 w-4" />
                   Hablar con un asesor
@@ -81,14 +81,14 @@ export default function ProductPage({ product }) {
                 transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="relative"
               >
-                <div className="absolute -right-6 -top-6 h-full w-full bg-[#003781]" aria-hidden="true" />
+                <div className="absolute -right-6 -top-6 h-full w-full bg-[#3D1A4E]" aria-hidden="true" />
                 <img
                   src={product.image}
                   alt={product.title}
                   data-testid="product-image"
                   className="relative aspect-[4/5] w-full object-cover"
                 />
-                <span className="absolute -bottom-6 right-6 bg-white px-6 py-4 font-serif text-5xl font-light text-[#003781]/25 shadow-lg">
+                <span className="absolute -bottom-6 right-6 bg-white px-6 py-4 font-serif text-5xl font-light text-[#3D1A4E]/25 shadow-lg">
                   {product.chapter}
                 </span>
               </motion.div>
@@ -120,7 +120,7 @@ export default function ProductPage({ product }) {
                   className="flex items-start gap-4 bg-white p-8"
                   data-testid={`product-benefit-${i}`}
                 >
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center bg-[#003781]">
+                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center bg-[#3D1A4E]">
                     <Check className="h-4 w-4 text-white" />
                   </span>
                   <p className="text-base font-light leading-relaxed text-neutral-700">{b}</p>
@@ -132,7 +132,7 @@ export default function ProductPage({ product }) {
 
         <section className="border-t border-black/10 bg-[#FAFAFA] py-24" data-testid="product-others-section">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <p className="mb-10 text-xs font-semibold uppercase tracking-[0.3em] text-[#003781]">
+            <p className="mb-10 text-xs font-semibold uppercase tracking-[0.3em] text-[#3D1A4E]">
               Explora también
             </p>
             <div className="divide-y divide-black/10 border-y border-black/10">
@@ -143,10 +143,10 @@ export default function ProductPage({ product }) {
                   data-testid={`other-service-${p.slug}`}
                   className="group flex items-center justify-between py-8 transition-colors"
                 >
-                  <span className="font-serif text-2xl font-light tracking-tight text-[#0A0A0A] transition-colors group-hover:text-[#003781] md:text-4xl">
+                  <span className="font-serif text-2xl font-light tracking-tight text-[#0A0A0A] transition-colors group-hover:text-[#3D1A4E] md:text-4xl">
                     {p.title}
                   </span>
-                  <ArrowUpRight className="h-6 w-6 text-neutral-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#003781]" />
+                  <ArrowUpRight className="h-6 w-6 text-neutral-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#3D1A4E]" />
                 </Link>
               ))}
             </div>

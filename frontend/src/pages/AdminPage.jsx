@@ -93,17 +93,17 @@ export default function AdminPage() {
 
   if (checking) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#FAFAFA]" data-testid="admin-loading">
-        <Loader2 className="h-6 w-6 animate-spin text-[#003781]" />
+      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F2]" data-testid="admin-loading">
+        <Loader2 className="h-6 w-6 animate-spin text-[#3D1A4E]" />
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#00255A] px-6" data-testid="admin-login-page">
+      <div className="flex min-h-screen items-center justify-center bg-[#1E1E2E] px-6" data-testid="admin-login-page">
         <form onSubmit={login} className="w-full max-w-sm bg-white p-10" data-testid="admin-login-form">
-          <p className="font-serif text-2xl font-bold tracking-tight text-[#003781]">XIMNANZAS</p>
+          <p className="font-serif text-2xl font-bold tracking-tight text-[#3D1A4E]">XIMNANZAS</p>
           <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-neutral-500">Panel de prospectos</p>
           <div className="mt-8 grid gap-2">
             <Label htmlFor="admin-email">Email</Label>
@@ -138,7 +138,7 @@ export default function AdminPage() {
             data-testid="admin-login-button"
             type="submit"
             disabled={loading}
-            className="mt-8 w-full rounded-none bg-[#003781] py-5 text-xs font-semibold uppercase tracking-widest hover:bg-[#00255A]"
+            className="mt-8 w-full rounded-none bg-[#3D1A4E] py-5 text-xs font-semibold uppercase tracking-widest hover:bg-[#1E1E2E]"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Entrar"}
           </Button>
@@ -148,8 +148,8 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]" data-testid="admin-dashboard">
-      <header className="border-b border-black/10 bg-[#003781] text-white">
+    <div className="min-h-screen bg-[#FAF7F2]" data-testid="admin-dashboard">
+      <header className="border-b border-black/10 bg-[#3D1A4E] text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
           <div className="flex items-baseline gap-3">
             <span className="font-serif text-xl font-bold tracking-tight">XIMNANZAS</span>
@@ -158,7 +158,7 @@ export default function AdminPage() {
           <button
             data-testid="admin-logout-button"
             onClick={logout}
-            className="inline-flex items-center gap-2 border border-white/30 px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-[#003781]"
+            className="inline-flex items-center gap-2 border border-white/30 px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors hover:bg-white hover:text-[#3D1A4E]"
           >
             <LogOut className="h-3.5 w-3.5" />
             Salir
@@ -170,11 +170,11 @@ export default function AdminPage() {
         <div className="grid grid-cols-2 gap-px border border-black/10 bg-black/10 sm:grid-cols-4">
           <div className="bg-white p-6">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-neutral-500">Prospectos</p>
-            <p data-testid="leads-count" className="mt-2 font-serif text-4xl font-light text-[#003781]">{leads.length}</p>
+            <p data-testid="leads-count" className="mt-2 font-serif text-4xl font-light text-[#3D1A4E]">{leads.length}</p>
           </div>
           <div className="bg-white p-6">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-neutral-500">Citas</p>
-            <p data-testid="appointments-count" className="mt-2 font-serif text-4xl font-light text-[#003781]">
+            <p data-testid="appointments-count" className="mt-2 font-serif text-4xl font-light text-[#3D1A4E]">
               {appointments.length}
             </p>
           </div>
@@ -186,7 +186,7 @@ export default function AdminPage() {
               data-testid="tab-leads-button"
               onClick={() => setTab("leads")}
               className={`px-5 py-2.5 text-xs font-semibold uppercase tracking-widest transition-colors ${
-                tab === "leads" ? "bg-[#003781] text-white" : "border border-black/15 text-neutral-600 hover:border-[#003781]"
+                tab === "leads" ? "bg-[#3D1A4E] text-white" : "border border-black/15 text-neutral-600 hover:border-[#3D1A4E]"
               }`}
             >
               Prospectos
@@ -196,8 +196,8 @@ export default function AdminPage() {
               onClick={() => setTab("appointments")}
               className={`px-5 py-2.5 text-xs font-semibold uppercase tracking-widest transition-colors ${
                 tab === "appointments"
-                  ? "bg-[#003781] text-white"
-                  : "border border-black/15 text-neutral-600 hover:border-[#003781]"
+                  ? "bg-[#3D1A4E] text-white"
+                  : "border border-black/15 text-neutral-600 hover:border-[#3D1A4E]"
               }`}
             >
               Citas
@@ -208,7 +208,7 @@ export default function AdminPage() {
               data-testid="export-csv-button"
               onClick={exportLeads}
               variant="outline"
-              className="rounded-none border-[#003781] text-xs font-semibold uppercase tracking-widest text-[#003781] hover:bg-[#003781] hover:text-white"
+              className="rounded-none border-[#3D1A4E] text-xs font-semibold uppercase tracking-widest text-[#3D1A4E] hover:bg-[#3D1A4E] hover:text-white"
             >
               <Download className="h-4 w-4" />
               Exportar CSV
@@ -229,7 +229,7 @@ export default function AdminPage() {
               data-testid="filter-interest-select"
               value={interestFilter}
               onChange={(e) => setInterestFilter(e.target.value)}
-              className="h-9 border border-input bg-transparent px-3 text-sm outline-none focus:border-[#003781]"
+              className="h-9 border border-input bg-transparent px-3 text-sm outline-none focus:border-[#3D1A4E]"
             >
               <option value="todos">Todos los intereses</option>
               {INTERESTS.map((i) => (
@@ -253,7 +253,7 @@ export default function AdminPage() {
                   setInterestFilter("todos");
                   setDateFilter("");
                 }}
-                className="text-xs font-semibold uppercase tracking-widest text-[#003781] hover:underline"
+                className="text-xs font-semibold uppercase tracking-widest text-[#3D1A4E] hover:underline"
               >
                 Limpiar filtros
               </button>

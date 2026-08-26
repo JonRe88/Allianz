@@ -85,8 +85,8 @@ export const AppointmentDialog = ({ open, onOpenChange }) => {
                     onClick={() => setTime(slot)}
                     className={`border px-2 py-2 text-sm transition-colors ${
                       time === slot
-                        ? "border-[#003781] bg-[#003781] text-white"
-                        : "border-black/15 text-neutral-700 hover:border-[#003781] hover:text-[#003781]"
+                        ? "border-[#3D1A4E] bg-[#3D1A4E] text-white"
+                        : "border-black/15 text-neutral-700 hover:border-[#3D1A4E] hover:text-[#3D1A4E]"
                     }`}
                   >
                     {slot}
@@ -126,7 +126,7 @@ export const AppointmentDialog = ({ open, onOpenChange }) => {
               data-testid="appointment-submit-button"
               type="submit"
               disabled={loading}
-              className="mt-auto rounded-none bg-[#003781] py-6 text-xs font-semibold uppercase tracking-widest hover:bg-[#00255A]"
+              className="mt-auto rounded-none bg-[#3D1A4E] py-6 text-xs font-semibold uppercase tracking-widest hover:bg-[#6B3F8A]"
             >
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Confirmar cita"}
             </Button>

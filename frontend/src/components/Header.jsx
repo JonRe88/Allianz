@@ -19,23 +19,23 @@ export const Header = ({ onAgenda }) => (
         </span>
       </Link>
       <nav className="hidden items-center gap-8 text-sm font-medium text-neutral-600 md:flex">
-        <Link data-testid="nav-simulator-link" to="/#simulador" className="transition-colors hover:text-[#003781]">
+        <Link data-testid="nav-simulator-link" to="/#simulador" className="transition-colors hover:text-[#3D1A4E]">
           Simulador
         </Link>
-        <Link data-testid="nav-benefits-link" to="/#beneficios" className="transition-colors hover:text-[#003781]">
+        <Link data-testid="nav-benefits-link" to="/#beneficios" className="transition-colors hover:text-[#3D1A4E]">
           Beneficios
         </Link>
-        <Link data-testid="nav-services-link" to="/#servicios" className="transition-colors hover:text-[#003781]">
+        <Link data-testid="nav-services-link" to="/#servicios" className="transition-colors hover:text-[#3D1A4E]">
           Servicios
         </Link>
-        <Link data-testid="nav-contact-link" to="/#contacto" className="transition-colors hover:text-[#003781]">
+        <Link data-testid="nav-contact-link" to="/#contacto" className="transition-colors hover:text-[#3D1A4E]">
           Contacto
         </Link>
       </nav>
       <Button
         data-testid="header-agenda-button"
         onClick={onAgenda}
-        className="rounded-none bg-[#003781] px-5 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#00255A]"
+        className="rounded-none bg-[#3D1A4E] px-5 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#6B3F8A]"
       >
         Agenda una cita
       </Button>

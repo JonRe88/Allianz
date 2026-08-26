@@ -31,7 +31,7 @@ const FAQS = [
 ];
 
 export const FAQ = () => (
-  <section id="preguntas" data-testid="faq-section" className="border-t border-black/10 bg-[#FAFAFA] py-24 lg:py-32">
+  <section id="preguntas" data-testid="faq-section" className="border-t border-black/10 bg-[#FAF7F2] py-24 lg:py-32">
     <div className="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-6 lg:grid-cols-12 lg:px-10">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -40,9 +40,9 @@ export const FAQ = () => (
         transition={{ duration: 0.8 }}
         className="lg:col-span-5"
       >
-        <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#003781]">Preguntas frecuentes</p>
+        <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#3D1A4E]">Preguntas frecuentes</p>
         <h2 className="font-serif text-4xl font-light tracking-tighter text-[#0A0A0A] md:text-5xl">
-          Todo claro, <em className="font-normal text-[#003781]">sin letras chiquitas.</em>
+          Todo claro, <em className="font-normal text-[#B8850A]">sin letras chiquitas.</em>
         </h2>
         <p className="mt-8 max-w-sm text-base font-light leading-relaxed text-neutral-600">
           Deducibilidad, retiros, beneficiarios y respaldo: las dudas más comunes de quienes empiezan su Plan
@@ -53,7 +53,7 @@ export const FAQ = () => (
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-10 inline-flex items-center gap-3 border border-[#003781]/30 px-6 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#003781] transition-colors hover:border-[#003781] hover:bg-[#003781] hover:text-white"
+          className="mt-10 inline-flex items-center gap-3 border border-[#3D1A4E]/30 px-6 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#3D1A4E] transition-colors hover:border-[#3D1A4E] hover:bg-[#3D1A4E] hover:text-white"
         >
           <MessageCircle className="h-4 w-4" />
           ¿Otra duda? Pregúntanos por WhatsApp
@@ -71,7 +71,7 @@ export const FAQ = () => (
             <AccordionItem key={i} value={`faq-${i}`} className="border-black/10" data-testid={`faq-item-${i}`}>
               <AccordionTrigger
                 data-testid={`faq-trigger-${i}`}
-                className="py-6 text-left font-serif text-lg font-normal tracking-tight text-[#0A0A0A] transition-colors hover:text-[#003781] hover:no-underline md:text-xl"
+                className="py-6 text-left font-serif text-lg font-normal tracking-tight text-[#0A0A0A] transition-colors hover:text-[#3D1A4E] hover:no-underline md:text-xl"
               >
                 {f.q}
               </AccordionTrigger>

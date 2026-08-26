@@ -36,7 +36,7 @@ export const Simulator = ({ onAgenda }) => {
     const doc = new jsPDF({ orientation: "landscape" });
     doc.setFont("helvetica", "bold");
     doc.setFontSize(24);
-    doc.setTextColor(0, 55, 129);
+    doc.setTextColor(61, 26, 78);
     doc.text("XIMNANZAS", 14, 20);
     doc.setFontSize(13);
     doc.setTextColor(10, 10, 10);
@@ -54,7 +54,7 @@ export const Simulator = ({ onAgenda }) => {
       head: [["Año", "Edad", "Aportado acumulado", "Saldo proyectado"]],
       body: projection.map((r) => [r.year, r.age, fmtMXN(r.contributed), fmtMXN(r.balance)]),
       styles: { fontSize: 9, cellPadding: 2 },
-      headStyles: { fillColor: [0, 55, 129], textColor: 255 },
+      headStyles: { fillColor: [61, 26, 78], textColor: 255 },
       alternateRowStyles: { fillColor: [245, 247, 252] },
     });
     const h = doc.internal.pageSize.getHeight();
@@ -69,7 +69,7 @@ export const Simulator = ({ onAgenda }) => {
   };
 
   return (
-    <section id="simulador" data-testid="simulator-section" className="bg-[#00255A] py-24 text-white lg:py-32">
+    <section id="simulador" data-testid="simulator-section" className="bg-[#1E1E2E] py-24 text-white lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -146,7 +146,7 @@ export const Simulator = ({ onAgenda }) => {
                   onClick={() => setProfile(p)}
                   className={`border px-3 py-4 text-left transition-colors ${
                     profile.id === p.id
-                      ? "border-white bg-white text-[#00255A]"
+                      ? "border-white bg-white text-[#1E1E2E]"
                       : "border-white/25 text-white/80 hover:border-white hover:text-white"
                   }`}
                 >
@@ -170,7 +170,7 @@ export const Simulator = ({ onAgenda }) => {
             className="lg:col-span-7"
           >
             <div className="grid grid-cols-1 gap-px bg-white/15 sm:grid-cols-2">
-              <div className="bg-[#00255A] p-8">
+              <div className="bg-[#1E1E2E] p-8">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50">
                   Saldo proyectado a los {RETIREMENT_AGE}
                 </p>
@@ -178,7 +178,7 @@ export const Simulator = ({ onAgenda }) => {
                   {fmtMXN(final.balance)}
                 </p>
               </div>
-              <div className="bg-[#00255A] p-8">
+              <div className="bg-[#1E1E2E] p-8">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50">Total aportado</p>
                 <p data-testid="total-contributed" className="mt-3 font-serif text-4xl font-light tracking-tight text-white/70 md:text-5xl">
                   {fmtMXN(final.contributed)}
@@ -216,7 +216,7 @@ export const Simulator = ({ onAgenda }) => {
                     <Tooltip
                       formatter={(v) => fmtMXN(v)}
                       labelFormatter={(a) => `Edad ${a} años`}
-                      contentStyle={{ background: "#003781", border: "none", fontSize: 12 }}
+                      contentStyle={{ background: "#3D1A4E", border: "none", fontSize: 12 }}
                       itemStyle={{ color: "#fff" }}
                       labelStyle={{ color: "rgba(255,255,255,0.65)" }}
                     />
@@ -244,7 +244,7 @@ export const Simulator = ({ onAgenda }) => {
 
             <div className="mt-10 max-h-80 overflow-y-auto border border-white/15" data-testid="projection-table-wrapper">
               <Table>
-                <TableHeader className="sticky top-0 bg-[#003781]">
+                <TableHeader className="sticky top-0 bg-[#3D1A4E]">
                   <TableRow className="border-white/15 hover:bg-transparent">
                     <TableHead className="text-white/80">Año</TableHead>
                     <TableHead className="text-white/80">Edad</TableHead>
@@ -269,7 +269,7 @@ export const Simulator = ({ onAgenda }) => {
               <button
                 data-testid="download-pdf-button"
                 onClick={downloadPDF}
-                className="group inline-flex items-center gap-3 bg-white px-8 py-4 text-xs font-semibold uppercase tracking-widest text-[#00255A] transition-colors hover:bg-white/85"
+                className="group inline-flex items-center gap-3 bg-white px-8 py-4 text-xs font-semibold uppercase tracking-widest text-[#1E1E2E] transition-colors hover:bg-white/85"
               >
                 <Download className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
                 Descargar mi proyección
@@ -277,7 +277,7 @@ export const Simulator = ({ onAgenda }) => {
               <button
                 data-testid="simulator-agenda-button"
                 onClick={onAgenda}
-                className="inline-flex items-center gap-3 border border-white/40 px-8 py-4 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:border-white hover:bg-white hover:text-[#00255A]"
+                className="inline-flex items-center gap-3 border border-white/40 px-8 py-4 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:border-white hover:bg-white hover:text-[#1E1E2E]"
               >
                 <CalendarDays className="h-4 w-4" />
                 Agenda una cita

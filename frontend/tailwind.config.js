@@ -58,9 +58,9 @@ module.exports = {
           '5': 'hsl(var(--chart-5))'
         },
         brand: {
-          charcoal: '#121212',
-          gold: '#B8860B',
-          sageLight: '#DCE3D2'
+          charcoal: '#1E1E2E',
+          gold: '#B8850A',
+          sageLight: '#D8F0E5'
         }
       },
       keyframes: {
