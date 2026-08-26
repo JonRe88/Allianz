@@ -27,11 +27,13 @@ Landing page premium estilo Awwwards para asesor Allianz independiente en Méxic
 - 2026-08-26: Tira de logos institucionales movida justo debajo del hero (antes estaba antes del footer).
 - 2026-08-26 (Iteración 8): Retemado completo a la paleta oficial de marca XIMNANZAS — Ciruela Profundo #3D1A4E (primario, reemplaza azul Allianz), Ciruela Medio #6B3F8A (hovers), Carbón Oscuro #1E1E2E (hero, simulador, login admin, footer), Crema Cálido #FAF7F2 (fondos claros), Dorado Aspiracional #B8850A (CTA hero + itálicas de énfasis en Testimonios/FAQ), Salvia Claro #D8F0E5 (texto sobre oscuro). Tokens Tailwind brand y CSS vars actualizados; PDF del simulador con encabezado ciruela.
 
+- 2026-08-26 (Iteración 9): Estado de prospectos — campo `status` en leads (default "Nuevo") + endpoint `PATCH /api/leads/{id}/status` (JWT, valida Nuevo/Contactado/En seguimiento/Cerrado); columna "Estado" con selector de colores en la tabla de prospectos (guardado optimista al instante) e incluido en el CSV. Botón "Exportar CSV" también en la pestaña de Citas (Nombre, Teléfono, Fecha, Hora, Registrada). Verificado por curl (default, PATCH válido/ inválido, auth) y screenshots.
+
 ## Backlog
 - P1: Selector de edad de retiro, recordatorio de cita por WhatsApp.
-- P2: Multi-asesor con asignación de leads, exportar CSV de citas, envío de proyección PDF por email al prospecto.
+- P2: Multi-asesor con asignación de leads, envío de proyección PDF por email al prospecto, filtro por estado en tabla de prospectos.
 
 ## Próximas tareas
-1. Exportar CSV también de citas.
+1. Filtro por estado en la tabla de prospectos.
 2. Recordatorio de cita por WhatsApp.
 3. Selector de edad de retiro en el simulador.

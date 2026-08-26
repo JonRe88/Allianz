@@ -15,6 +15,15 @@ const INTERESTS = [
   "Auto y Hogar",
 ];
 
+const LEAD_STATUSES = ["Nuevo", "Contactado", "En seguimiento", "Cerrado"];
+
+const STATUS_STYLES = {
+  Nuevo: "border-neutral-300 bg-neutral-50 text-neutral-700",
+  Contactado: "border-blue-300 bg-blue-50 text-blue-700",
+  "En seguimiento": "border-amber-300 bg-amber-50 text-amber-700",
+  Cerrado: "border-emerald-300 bg-emerald-50 text-emerald-700",
+};
+
 const toCSV = (rows) =>
   rows.map((r) => r.map((c) => `"${String(c ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
 
@@ -86,9 +95,29 @@ export default function AdminPage() {
   };
 
   const exportLeads = () => {
-    const rows = [["Nombre", "Email", "Teléfono", "Interés", "Mensaje", "Fecha"]];
-    leads.forEach((l) => rows.push([l.name, l.email, l.phone, l.interest, l.message, l.created_at]));
+    const rows = [["Nombre", "Email", "Teléfono", "Interés", "Estado", "Mensaje", "Fecha"]];
+    leads.forEach((l) =>
+      rows.push([l.name, l.email, l.phone, l.interest, l.status || "Nuevo", l.message, l.created_at])
+    );
     downloadCSV("prospectos-ximnanzas.csv", toCSV(rows));
+  };
+
+  const exportAppointments = () => {
+    const rows = [["Nombre", "Teléfono", "Fecha", "Hora", "Registrada"]];
+    appointments.forEach((a) => rows.push([a.name, a.phone, a.date, a.time, a.created_at]));
+    downloadCSV("citas-ximnanzas.csv", toCSV(rows));
+  };
+
+  const changeStatus = async (id, status) => {
+    const prev = leads;
+    setLeads((ls) => ls.map((l) => (l.id === id ? { ...l, status } : l)));
+    try {
+      await api.patch(`/leads/${id}/status`, { status });
+      toast.success(`Estado actualizado: ${status}`);
+    } catch {
+      setLeads(prev);
+      toast.error("No se pudo actualizar el estado");
+    }
   };
 
   if (checking) {
@@ -203,10 +232,20 @@ export default function AdminPage() {
               Citas
             </button>
           </div>
-          {tab === "leads" && (
+          {tab === "leads" ? (
             <Button
               data-testid="export-csv-button"
               onClick={exportLeads}
+              variant="outline"
+              className="rounded-none border-[#3D1A4E] text-xs font-semibold uppercase tracking-widest text-[#3D1A4E] hover:bg-[#3D1A4E] hover:text-white"
+            >
+              <Download className="h-4 w-4" />
+              Exportar CSV
+            </Button>
+          ) : (
+            <Button
+              data-testid="export-appointments-csv-button"
+              onClick={exportAppointments}
               variant="outline"
               className="rounded-none border-[#3D1A4E] text-xs font-semibold uppercase tracking-widest text-[#3D1A4E] hover:bg-[#3D1A4E] hover:text-white"
             >
@@ -270,6 +309,7 @@ export default function AdminPage() {
                   <TableHead>Email</TableHead>
                   <TableHead>Teléfono</TableHead>
                   <TableHead>Interés</TableHead>
+                  <TableHead>Estado</TableHead>
                   <TableHead>Mensaje</TableHead>
                   <TableHead>Fecha</TableHead>
                 </TableRow>
@@ -277,7 +317,7 @@ export default function AdminPage() {
               <TableBody>
                 {filteredLeads.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={6} className="py-10 text-center text-sm text-neutral-500" data-testid="leads-empty">
+                    <TableCell colSpan={7} className="py-10 text-center text-sm text-neutral-500" data-testid="leads-empty">
                       No hay prospectos que coincidan.
                     </TableCell>
                   </TableRow>
@@ -288,6 +328,22 @@ export default function AdminPage() {
                     <TableCell>{l.email}</TableCell>
                     <TableCell>{l.phone}</TableCell>
                     <TableCell>{l.interest}</TableCell>
+                    <TableCell>
+                      <select
+                        data-testid={`lead-status-select-${l.id}`}
+                        value={l.status || "Nuevo"}
+                        onChange={(e) => changeStatus(l.id, e.target.value)}
+                        className={`cursor-pointer rounded-full border px-2.5 py-1 text-xs font-semibold outline-none transition-colors ${
+                          STATUS_STYLES[l.status || "Nuevo"]
+                        }`}
+                      >
+                        {LEAD_STATUSES.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                    </TableCell>
                     <TableCell className="max-w-56 truncate">{l.message || "—"}</TableCell>
                     <TableCell className="whitespace-nowrap text-neutral-500">
                       {l.created_at ? new Date(l.created_at).toLocaleString("es-MX") : "—"}

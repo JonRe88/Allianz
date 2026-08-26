@@ -297,10 +297,18 @@ class AppointmentInput(BaseModel):
     time: str
 
 
+LEAD_STATUSES = ("Nuevo", "Contactado", "En seguimiento", "Cerrado")
+
+
+class LeadStatusInput(BaseModel):
+    status: str
+
+
 @api_router.post("/leads")
 async def create_lead(input: LeadInput):
     doc = input.model_dump()
     doc["id"] = str(uuid.uuid4())
+    doc["status"] = "Nuevo"
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     await db.leads.insert_one(doc)
     try:
@@ -325,6 +333,16 @@ async def create_lead(input: LeadInput):
 @api_router.get("/leads")
 async def list_leads(user=Depends(get_current_user)):
     return await db.leads.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+
+
+@api_router.patch("/leads/{lead_id}/status")
+async def update_lead_status(lead_id: str, input: LeadStatusInput, user=Depends(get_current_user)):
+    if input.status not in LEAD_STATUSES:
+        raise HTTPException(status_code=400, detail="Estado inválido")
+    result = await db.leads.update_one({"id": lead_id}, {"$set": {"status": input.status}})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Prospecto no encontrado")
+    return {"id": lead_id, "status": input.status}
 
 
 @api_router.post("/appointments")
