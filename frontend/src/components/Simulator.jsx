@@ -32,38 +32,63 @@ export const Simulator = ({ onAgenda }) => {
 
   const final = projection[projection.length - 1];
 
-  const downloadPDF = () => {
+  const loadLogo = () =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        canvas.getContext("2d").drawImage(img, 0, 0);
+        resolve({ dataUrl: canvas.toDataURL("image/png"), ratio: img.naturalWidth / img.naturalHeight });
+      };
+      img.onerror = () => resolve(null);
+      img.src = "/logos/ximnanzas.png";
+    });
+
+  const downloadPDF = async () => {
     const doc = new jsPDF({ orientation: "landscape" });
+    const logo = await loadLogo();
+    let textX = 14;
+    if (logo) {
+      const logoHeight = 22;
+      const logoWidth = logoHeight * logo.ratio;
+      doc.addImage(logo.dataUrl, "PNG", 14, 8, logoWidth, logoHeight);
+      textX = 14 + logoWidth + 6;
+    } else {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(24);
+      doc.setTextColor(61, 26, 78);
+      doc.text("XIMNANZAS", 14, 20);
+    }
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(24);
-    doc.setTextColor(61, 26, 78);
-    doc.text("XIMNANZAS", 14, 20);
     doc.setFontSize(13);
     doc.setTextColor(10, 10, 10);
-    doc.text("Proyección de tu Plan Personal de Retiro · Allianz", 14, 30);
+    doc.text("Proyección de tu Plan Personal de Retiro · Allianz", textX, 18);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
     doc.setTextColor(82, 82, 82);
     doc.text(
       `Aportación mensual: ${fmtMXN(monthly)}   ·   Edad actual: ${age} años   ·   Perfil: ${profile.label} (${profile.rate}% anual)   ·   Retiro a los ${RETIREMENT_AGE} años`,
-      14,
-      38
+      textX,
+      26
     );
     autoTable(doc, {
-      startY: 44,
+      startY: 40,
       head: [["Año", "Edad", "Aportado acumulado", "Saldo proyectado"]],
       body: projection.map((r) => [r.year, r.age, fmtMXN(r.contributed), fmtMXN(r.balance)]),
       styles: { fontSize: 9, cellPadding: 2 },
       headStyles: { fillColor: [61, 26, 78], textColor: 255 },
       alternateRowStyles: { fillColor: [245, 247, 252] },
     });
-    const h = doc.internal.pageSize.getHeight();
+    const ph = doc.internal.pageSize.getHeight();
     doc.setFontSize(8);
     doc.setTextColor(130, 130, 130);
     doc.text(
       `XIMNANZAS · Asesor independiente Allianz. Proyección ilustrativa generada el ${new Date().toLocaleDateString("es-MX")}; los rendimientos reales pueden variar.`,
       14,
-      h - 10
+      ph - 10
     );
     doc.save("proyeccion-retiro-ximnanzas.pdf");
   };
