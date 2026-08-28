@@ -1,99 +1,103 @@
-# Here are your Instructions
+#====================================================================================================
+# START - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
+#====================================================================================================
 
-  "project_name": "XIMNANZAS - Allianz PPR Landing Page",
-  "theme": "Light mode base for high trust and legibility, using Corporate Allianz Blue (#003781) as the high-contrast structural anchor.",
-  "typography": 
-    "fonts": 
-      "headings": "Playfair Display",
-      "body": "Outfit"
-    "rules": [
-      "Use Playfair Display for all H1, H2, and large editorial manifesto numbers.",
-      "Use Outfit for body text, form elements, small labels, and data tables.",
-      "Headings should use tracking-tight to tracking-tighter for a premium editorial look.",
-      "Never default to bold. Use font-light or font-black to create tension.",
-      "Inject Google Fonts: <link href=\"https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap\" rel=\"stylesheet\">"
-    ]
-  },
-  "colors": {
-    "brand_primary": "#003781",
-    "brand_secondary": "#00255A",
-    "background_base": "#FAFAFA",
-    "surface": "#FFFFFF",
-    "text_primary": "#0A0A0A",
-    "text_secondary": "#525252",
-    "rules": [
-      "Never use pure black or pure white except for structural components.",
-      "Use #003781 for primary buttons, massive typography highlights, and the admin sidebar.",
-      "No generic full-screen gradients. Keep backgrounds solid or use subtle grain textures."
-    ]
-  },
-  "spacing_and_layout": {
-    "grid_system": "Use wide containers (max-w-7xl) with generous padding (py-24 or py-32).",
-    "manifesto": "Asymmetric layout. Massive numbers (01, 02) taking 4 columns, text taking 8 columns. Separate chapters with thin 1px borders.",
-    "services_grid": "border-collapse style CSS grid. High technical precision."
-  },
-  "components": {
-    "header": {
-      "rules": "CRITICAL: Do NOT use a fully transparent background. Use backdrop-blur-xl bg-white/80 or bg-white/90."
-    },
-    "kinetic_hero": {
-      "rules": "Framer Motion masked line-by-line reveal. Wrap each line in an overflow-hidden span. Translate Y from 100% to 0%. Large Playfair Display text."
-    },
-    "interactive_calculator": {
-      "rules": "Shadcn Sliders for 'Aportación Mensual' and 'Edad'. Toggle chips for risk profiles (Conservador 6%, Balanceado 8%, Dinámico 10%). Display year-by-year projection in a neat HTML table or list. Include 'Descargar PDF' button."
-    },
-    "marquee": {
-      "rules": "Slow, editorial motion. Playfair Display text-4xl or larger. Use react-fast-marquee or framer-motion."
-    },
-    "modals_and_forms": {
-      "rules": "Use Shadcn Dialog for 'Agenda una cita' modal with a calendar or contact form inside."
-    },
-    "admin_dashboard": {
-      "rules": "Private route /prospectos. Dense layout. Sidebar navigation. Use Shadcn Table for leads with an 'Export to CSV' button."
-    }
-  },
-  "motion": {
-    "scrolling": "Implement @studio-freight/lenis for smooth momentum scrolling. Wraps the main layout.",
-    "reveals": "Use framer-motion for whileInView scroll reveals. Staggered fade-up for grid items."
-  },
-  "accessibility": {
-    "contrast": "Ensure #003781 on #FAFAFA meets APCA minimums.",
-    "testing": "All interactive elements MUST have data-testid attributes.",
-    "motion": "Respect prefers-reduced-motion media query."
-  },
-  "media": {
-    "image_urls": [
-      {
-        "url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwxfHxtYXR1cmUlMjBwcm9mZXNzaW9uYWwlMjBidXNpbmVzc21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc4NzY4ODg3NHww&ixlib=rb-4.1.0&q=85",
-        "category": "hero_or_advisor",
-        "description": "Mature professional businessman portrait."
-      },
-      {
-        "url": "https://images.pexels.com/photos/11888495/pexels-photo-11888495.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        "category": "background_architecture",
-        "description": "Elegant minimalist staircase for manifesto backdrop."
-      },
-      {
-        "url": "https://images.pexels.com/photos/7231071/pexels-photo-7231071.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        "category": "lifestyle_retirement",
-        "description": "Senior couple enjoying sunlit room."
-      },
-      {
-        "url": "https://images.pexels.com/photos/5784807/pexels-photo-5784807.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        "category": "finance_graph",
-        "description": "Abstract finance graph blue for calculator or investment sections."
-      }
-    ]
-  },
-  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
-    "You are building for a .js (JavaScript/JSX) environment. DO NOT use TypeScript (.tsx) types or interfaces.",
-    "Use react-router-dom for routes: /, /seguro-de-vida, /inversion-inteligente, /gastos-medicos-mayores, /auto-y-hogar, /prospectos.",
-    "Use pre-existing Shadcn components from src/components/ui when applicable. Rely on Shadcn for Sliders, Tables, Inputs, and Dialogs.",
-    "Never center align the entire app container. Use optical alignment over geometric alignment.",
-    "Every interaction needs micro-animations - hover states, transitions. Exclude transform from 'transition-all'.",
-    "Always apply data-testid to buttons, inputs, links, and forms for testing stability.",
-    "Use 2-3x more spacing than feels comfortable. The design must feel high-end, premium, and breathable.",
-    "For the admin panel, prioritize function and density. Use sharp edges and simple layouts.",
-    "Do NOT use placeholder image URLs. Only use the provided image URLs in this JSON.",
-    "Do NOT use emojis for icons. Use lucide-react or phosphor-icons.",
-    "Inject Google Fonts Playfair Display and Outfit into the index.html or global css."
+# THIS SECTION CONTAINS CRITICAL TESTING INSTRUCTIONS FOR BOTH AGENTS
+# BOTH MAIN_AGENT AND TESTING_AGENT MUST PRESERVE THIS ENTIRE BLOCK
+
+# Communication Protocol:
+# If the `testing_agent` is available, main agent should delegate all testing tasks to it.
+#
+# You have access to a file called `test_result.md`. This file contains the complete testing state
+# and history, and is the primary means of communication between main and the testing agent.
+#
+# Main and testing agents must follow this exact format to maintain testing data. 
+# The testing data must be entered in yaml format Below is the data structure:
+# 
+## user_problem_statement: {problem_statement}
+## backend:
+##   - task: "Task name"
+##     implemented: true
+##     working: true  # or false or "NA"
+##     file: "file_path.py"
+##     stuck_count: 0
+##     priority: "high"  # or "medium" or "low"
+##     needs_retesting: false
+##     status_history:
+##         -working: true  # or false or "NA"
+##         -agent: "main"  # or "testing" or "user"
+##         -comment: "Detailed comment about status"
+##
+## frontend:
+##   - task: "Task name"
+##     implemented: true
+##     working: true  # or false or "NA"
+##     file: "file_path.js"
+##     stuck_count: 0
+##     priority: "high"  # or "medium" or "low"
+##     needs_retesting: false
+##     status_history:
+##         -working: true  # or false or "NA"
+##         -agent: "main"  # or "testing" or "user"
+##         -comment: "Detailed comment about status"
+##
+## metadata:
+##   created_by: "main_agent"
+##   version: "1.0"
+##   test_sequence: 0
+##   run_ui: false
+##
+## test_plan:
+##   current_focus:
+##     - "Task name 1"
+##     - "Task name 2"
+##   stuck_tasks:
+##     - "Task name with persistent issues"
+##   test_all: false
+##   test_priority: "high_first"  # or "sequential" or "stuck_first"
+##
+## agent_communication:
+##     -agent: "main"  # or "testing" or "user"
+##     -message: "Communication message between agents"
+
+# Protocol Guidelines for Main agent
+#
+# 1. Update Test Result File Before Testing:
+#    - Main agent must always update the `test_result.md` file before calling the testing agent
+#    - Add implementation details to the status_history
+#    - Set `needs_retesting` to true for tasks that need testing
+#    - Update the `test_plan` section to guide testing priorities
+#    - Add a message to `agent_communication` explaining what you've done
+#
+# 2. Incorporate User Feedback:
+#    - When a user provides feedback that something is or isn't working, add this information to the relevant task's status_history
+#    - Update the working status based on user feedback
+#    - If a user reports an issue with a task that was marked as working, increment the stuck_count
+#    - Whenever user reports issue in the app, if we have testing agent and task_result.md file so find the appropriate task for that and append in status_history of that task to contain the user concern and problem as well 
+#
+# 3. Track Stuck Tasks:
+#    - Monitor which tasks have high stuck_count values or where you are fixing same issue again and again, analyze that when you read task_result.md
+#    - For persistent issues, use websearch tool to find solutions
+#    - Pay special attention to tasks in the stuck_tasks list
+#    - When you fix an issue with a stuck task, don't reset the stuck_count until the testing agent confirms it's working
+#
+# 4. Provide Context to Testing Agent:
+#    - When calling the testing agent, provide clear instructions about:
+#      - Which tasks need testing (reference the test_plan)
+#      - Any authentication details or configuration needed
+#      - Specific test scenarios to focus on
+#      - Any known issues or edge cases to verify
+#
+# 5. Call the testing agent with specific instructions referring to test_result.md
+#
+# IMPORTANT: Main agent must ALWAYS update test_result.md BEFORE calling the testing agent, as it relies on this file to understand what to test next.
+
+#====================================================================================================
+# END - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
+#====================================================================================================
+
+
+
+#====================================================================================================
+# Testing Data - Main Agent and testing sub agent both should log testing data below this section
+#====================================================================================================
