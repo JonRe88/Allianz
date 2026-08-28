@@ -31,7 +31,7 @@ export default function LandingPage() {
 
   return (
     <div data-testid="landing-page">
-      <Header onAgenda={openAgenda} />
+      <Header onAgenda={openAgenda} transparentTop />
       <main>
         <Hero onAgenda={openAgenda} />
         <WhatsAppFloat />
