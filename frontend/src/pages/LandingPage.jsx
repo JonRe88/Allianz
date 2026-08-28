@@ -11,7 +11,8 @@ import { FAQ } from "@/components/FAQ";
 import { LogoStrip } from "@/components/LogoStrip";
 import { LeadForm } from "@/components/LeadForm";
 import { Footer } from "@/components/Footer";
-import { AppointmentDialog } from "@/components/AppointmentDialog";
+import { AppointmentDialog } from "@/components/AppointmentDialog;
+import {WhatsAppFloat } from "@/components/WhatsAppFloat";
 
 export default function LandingPage() {
   const [agendaOpen, setAgendaOpen] = useState(false);
@@ -33,6 +34,7 @@ export default function LandingPage() {
       <Header onAgenda={openAgenda} />
       <main>
         <Hero onAgenda={openAgenda} />
+        <WhatsAppFloat />
         <LogoStrip />
         <Marquee />
         <Manifesto />
