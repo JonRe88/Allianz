@@ -7,6 +7,7 @@ import LandingPage from "@/pages/LandingPage";
 import ProductPage from "@/pages/ProductPage";
 import AdminPage from "@/pages/AdminPage";
 import { PRODUCTS } from "@/data/products";
+import {WhatsAppFloat} from "@/components/WhatsAppFloat";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -46,6 +47,7 @@ function App() {
           />
           <Route path="/auto-y-hogar" element={<ProductPage product={PRODUCTS["auto-y-hogar"]} />} />
           <Route path="/prospectos" element={<AdminPage />} />
+          <WhatsAppFloat />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-center" richColors />
