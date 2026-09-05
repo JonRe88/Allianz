@@ -161,8 +161,8 @@ export const Simulator = ({ onAgenda }) => {
                 <span>64</span>
               </div>
             </div>
-
-            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/70">Perfil de riesgo</p>
+   
+         <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/70">Perfil de Inversionista</p>
             <div className="grid grid-cols-3 gap-2" data-testid="risk-profile-chips">
               {RISK_PROFILES.map((p) => (
                 <button
