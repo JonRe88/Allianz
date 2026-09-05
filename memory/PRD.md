@@ -14,7 +14,8 @@ Landing page premium estilo Awwwards para asesor Allianz independiente en Méxic
 - Rutas: / , /seguro-de-vida, /inversion-inteligente, /gastos-medicos-mayores, /auto-y-hogar, /prospectos.
 
 ## Core requirements (static)
-- Simulador: sliders aportación mensual ($1k–$50k) y edad (18–64); perfiles Conservador 6% / Balanceado 8% / Dinámico 10%; tabla año por año; descarga PDF landscape con marca XIMNANZAS.
+
+- Simulador: sliders aportación mensual ($1k–$50k) y edad (18–64); perfiles Conservador 6% / Moderado 8% / Agresivo 10%; tabla año por año; descarga PDF landscape con marca XIMNANZAS.
 - Modal cita: calendario (días pasados y domingos bloqueados), horarios 10–13 y 16–18, nombre/teléfono → POST /api/appointments.
 - Leads: formulario → POST /api/leads. Ambos disparan email al owner.
 - Admin: login JWT (lockout 5 intentos/15 min), tabla leads + citas, exportar CSV, logout.

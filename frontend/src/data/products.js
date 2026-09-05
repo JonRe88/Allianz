@@ -14,8 +14,8 @@ export const IMAGES = {
 
 export const RISK_PROFILES = [
   { id: "conservador", label: "Conservador", rate: 6, desc: "Prioriza la estabilidad del capital." },
-  { id: "balanceado", label: "Balanceado", rate: 8, desc: "Equilibrio entre crecimiento y estabilidad." },
-  { id: "dinamico", label: "Dinámico", rate: 10, desc: "Busca maximizar el rendimiento a largo plazo." },
+  { id: "moderado", label: "Moderado", rate: 8, desc: "Equilibrio entre crecimiento y estabilidad." },
+  { id: "agresivo", label: "Agresivo", rate: 10, desc: "Busca maximizar el rendimiento a largo plazo." },
 ];
 
 export const PRODUCTS = {
@@ -42,7 +42,7 @@ export const PRODUCTS = {
       "Portafolios diversificados administrados por expertos de Allianz. Desde perfiles conservadores hasta estrategias dinámicas, con la disciplina que tu patrimonio merece.",
     benefits: [
       "Portafolios diversificados en instrumentos nacionales e internacionales.",
-      "Perfiles de riesgo Conservador, Balanceado y Dinámico.",
+      "Perfiles de riesgo Conservador, Moderado y Agresivo.",
       "Liquidez parcial sin penalizaciones después del primer año.",
       "Acompañamiento personalizado de un asesor certificado.",
     ],

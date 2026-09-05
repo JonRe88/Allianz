@@ -40,7 +40,7 @@
       "rules": "Framer Motion masked line-by-line reveal. Wrap each line in an overflow-hidden span. Translate Y from 100% to 0%. Large Playfair Display text."
     },
     "interactive_calculator": {
-      "rules": "Shadcn Sliders for 'Aportación Mensual' and 'Edad'. Toggle chips for risk profiles (Conservador 6%, Balanceado 8%, Dinámico 10%). Display year-by-year projection in a neat HTML table or list. Include 'Descargar PDF' button."
+      "rules": "Shadcn Sliders for 'Aportación Mensual' and 'Edad'. Toggle chips for risk profiles (conservador 6%, moderado 8%, agresivo 10%). Display year-by-year projection in a neat HTML table or list. Include 'Descargar PDF' button."
     },
     "marquee": {
       "rules": "Slow, editorial motion. Playfair Display text-4xl or larger. Use react-fast-marquee or framer-motion."
