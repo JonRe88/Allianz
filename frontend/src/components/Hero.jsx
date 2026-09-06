@@ -33,10 +33,95 @@ const INTERESTS = [
   "Otro",
 
 ];
+const WHATSAPP_NUMBER = "525951069096";
+
+const submit = async (e) => {
+
+  e.preventDefault();
+
+  if (
+
+    !form.name.trim() ||
+
+    !form.email.trim() ||
+
+    !form.phone.trim()
+
+  ) {
+
+    toast.error("Completa nombre, email y teléfono.");
+
+    return;
+
+  }
+
+  setLoading(true);
+
+  try {
+
+    // Primero guarda el lead en tu backend
+
+    await api.post("/leads", form);
+
+    const message = `
+
+Hola, quiero información sobre un Plan Personal de Retiro.
+
+👤 Nombre: ${form.name}
+
+📧 Email: ${form.email}
+
+📱 Teléfono: ${form.phone}
+
+💼 Me interesa: ${form.interest}
+
+💬 Mensaje: ${form.message || "Sin mensaje adicional"}
+
+    `.trim();
+
+    const whatsappUrl =
+
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    // Abre WhatsApp con el mensaje preparado
+
+    window.open(whatsappUrl, "_blank");
+
+    toast.success("Recibido. Un asesor te contactará muy pronto.");
+
+    setForm({
+
+      name: "",
+
+      email: "",
+
+      phone: "",
+
+      interest: INTERESTS[0],
+
+      message: "",
+
+    });
+
+  } catch (error) {
+
+    toast.error("No pudimos enviar tu solicitud. Intenta de nuevo.");
+
+  } finally {
+
+    setLoading(false);
+
+  }
+
+};
 
 const scrollToSection = (hash) => {
 
-  document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+  document.querySelector(hash)?.scrollIntoView({
+
+    behavior: "smooth",
+
+  });
 
 };
 
@@ -63,6 +148,7 @@ const MaskedLine = ({ children, delay = 0 }) => (
   </span>
 
 );
+
 
 export const Hero = () => {
 
