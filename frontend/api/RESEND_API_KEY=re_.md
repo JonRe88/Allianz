@@ -1,0 +1,3 @@
+RESEND_API_KEY=re_...
+RESEND_FROM_EMAIL=correo@dominio-verificado.com
+OWNER_EMAIL=ximenalalith.allianzmlp@gmail.com
