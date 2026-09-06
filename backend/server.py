@@ -58,7 +58,8 @@ def _host_ok(host: str) -> bool:
         ipaddress.ip_address(host)
         return False
     except ValueError:
-        pass    return not any(host == s or host.endswith("." + s) for s in _SHORTENERS)
+        pass
+    return not any(host == s or host.endswith("." + s) for s in _SHORTENERS)
 
 
 def _same_site(shown: str, real: str) -> bool:
