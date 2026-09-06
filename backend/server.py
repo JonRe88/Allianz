@@ -35,10 +35,11 @@ api_router = APIRouter(prefix="/api")
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-# ---------------- Email (Emergent managed Resend) ----------------
-EMAIL_BASE_URL = "https://integrations.emergentagent.com"
-EMAIL_KEY = os.environ["EMERGENT_EMAIL_KEY"]
-EMAIL_FROM_NAME = os.environ["EMAIL_FROM_NAME"]
+# ---------------- Email (Resend) ----------------
+RESEND_API_URL = "https://api.resend.com/emails"
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
+RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL")
+EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "XIMNANZAS")
 EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
 OWNER_EMAIL = os.environ["OWNER_EMAIL"]
 
@@ -117,13 +118,23 @@ def _assert_safe_email(subject: str, html: str) -> None:
 
 async def send_email(*, to: str, subject: str, html: str, reply_to: str = None) -> str:
     _assert_safe_email(subject, html)
-    payload = {"to": [to], "subject": subject, "html": html, "from_name": EMAIL_FROM_NAME}
+    if not RESEND_API_KEY or not RESEND_FROM_EMAIL:
+        raise RuntimeError("RESEND_API_KEY or RESEND_FROM_EMAIL is not configured")
+    payload = {
+        "from": f"{EMAIL_FROM_NAME} <{RESEND_FROM_EMAIL}>",
+        "to": [to],
+        "subject": subject,
+        "html": html,
+    }
     if reply_to or EMAIL_REPLY_TO:
-        payload["contact_email"] = reply_to or EMAIL_REPLY_TO
+        payload["reply_to"] = reply_to or EMAIL_REPLY_TO
     async with httpx.AsyncClient(timeout=30) as http:
         resp = await http.post(
-            f"{EMAIL_BASE_URL}/api/v1/email/send",
-            headers={"X-Email-Key": EMAIL_KEY},
+            RESEND_API_URL,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json",
+            },
             json=payload,
         )
     resp.raise_for_status()

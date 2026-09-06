@@ -1,6 +1,6 @@
 const { db } = require("../lib/mongodb");
 
-const EMAIL_BASE_URL = "https://integrations.emergentagent.com";
+const RESEND_API_URL = "https://api.resend.com/emails";
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -30,27 +30,26 @@ function emailTable(lead) {
 }
 
 async function notifyOwner(lead) {
-  const emailKey = process.env.EMERGENT_EMAIL_KEY;
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const resendFromEmail = process.env.RESEND_FROM_EMAIL;
   const ownerEmail = process.env.OWNER_EMAIL;
 
-  if (!emailKey || !ownerEmail) {
-    throw new Error("EMERGENT_EMAIL_KEY or OWNER_EMAIL is not configured");
+  if (!resendApiKey || !resendFromEmail || !ownerEmail) {
+    throw new Error("RESEND_API_KEY, RESEND_FROM_EMAIL or OWNER_EMAIL is not configured");
   }
 
-  const response = await fetch(`${EMAIL_BASE_URL}/api/v1/email/send`, {
+  const response = await fetch(RESEND_API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Email-Key": emailKey,
+      Authorization: `Bearer ${resendApiKey}`,
     },
     body: JSON.stringify({
+      from: `${process.env.EMAIL_FROM_NAME || "XIMNANZAS"} <${resendFromEmail}>`,
       to: [ownerEmail],
       subject: "Nuevo prospecto - XIMNANZAS",
       html: emailTable(lead),
-      from_name: process.env.EMAIL_FROM_NAME || "XIMNANZAS",
-      ...(process.env.EMAIL_REPLY_TO
-        ? { contact_email: process.env.EMAIL_REPLY_TO }
-        : {}),
+      ...(process.env.EMAIL_REPLY_TO ? { reply_to: process.env.EMAIL_REPLY_TO } : {}),
     }),
   });
 

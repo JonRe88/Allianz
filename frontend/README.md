@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 The contact form uses the same-origin function at `/api/leads`. Configure the
 variables listed in `.env.example` in the Vercel project before deploying.
-Keep `MONGODB_URI` and `EMERGENT_EMAIL_KEY` server-side variables and do not
+Keep `MONGODB_URI`, `RESEND_API_KEY`, and `RESEND_FROM_EMAIL` server-side variables and do not
 prefix them with `REACT_APP_`.
 
 ## Available Scripts
