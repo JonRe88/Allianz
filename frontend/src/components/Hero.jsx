@@ -16,6 +16,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Button } from "@/components/ui/button";
 
+import { api } from "@/lib/api";
+
 const HERO_IMG =
 
   "https://images.pexels.com/photos/36729964/pexels-photo-36729964.jpeg?auto=compress&cs=tinysrgb&w=1920";
@@ -34,86 +36,6 @@ const INTERESTS = [
 
 ];
 const WHATSAPP_NUMBER = "525951069096";
-
-const submit = async (e) => {
-
-  e.preventDefault();
-
-  if (
-
-    !form.name.trim() ||
-
-    !form.email.trim() ||
-
-    !form.phone.trim()
-
-  ) {
-
-    toast.error("Completa nombre, email y teléfono.");
-
-    return;
-
-  }
-
-  setLoading(true);
-
-  try {
-
-    // Primero guarda el lead en tu backend
-
-    await api.post("/leads", form);
-
-    const message = `
-
-Hola, quiero información sobre un Plan Personal de Retiro.
-
-👤 Nombre: ${form.name}
-
-📧 Email: ${form.email}
-
-📱 Teléfono: ${form.phone}
-
-💼 Me interesa: ${form.interest}
-
-💬 Mensaje: ${form.message || "Sin mensaje adicional"}
-
-    `.trim();
-
-    const whatsappUrl =
-
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    // Abre WhatsApp con el mensaje preparado
-
-    window.open(whatsappUrl, "_blank");
-
-    toast.success("Recibido. Un asesor te contactará muy pronto.");
-
-    setForm({
-
-      name: "",
-
-      email: "",
-
-      phone: "",
-
-      interest: INTERESTS[0],
-
-      message: "",
-
-    });
-
-  } catch (error) {
-
-    toast.error("No pudimos enviar tu solicitud. Intenta de nuevo.");
-
-  } finally {
-
-    setLoading(false);
-
-  }
-
-};
 
 const scrollToSection = (hash) => {
 
@@ -167,81 +89,37 @@ export const Hero = () => {
   const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const [form, setForm] = useState({
-
     name: "",
-
     phone: "",
-
     email: "",
-
     interest: INTERESTS[0],
-
     message: "",
-
   });
 
   const [loading, setLoading] = useState(false);
 
   const set = (field) => (e) => {
-
-    setForm((prev) => ({
-
-      ...prev,
-
-      [field]: e.target.value,
-
-    }));
-
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
   const submit = async (e) => {
-
     e.preventDefault();
-
-    if (!form.name || !form.phone || !form.email) {
-
+    if (!form.name.trim() || !form.phone.trim() || !form.email.trim()) {
       toast.error("Completa los campos obligatorios.");
-
       return;
-
     }
-
     setLoading(true);
-
     try {
-
-      // Aquí puedes conectar tu API o servicio de formularios.
-
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      console.log("Datos del formulario:", form);
-
-      toast.success("¡Gracias! Te contactaremos pronto.");
-
-      setForm({
-
-        name: "",
-
-        phone: "",
-
-        email: "",
-
-        interest: INTERESTS[0],
-
-        message: "",
-
-      });
-
+      await api.post("/leads", form);
+      const message = `Hola, quiero información sobre un Plan Personal de Retiro.\n\nNombre: ${form.name}\nEmail: ${form.email}\nTeléfono: ${form.phone}\nInterés: ${form.interest}\nMensaje: ${form.message || "Sin mensaje adicional"}`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+      toast.success("Recibido. Un asesor te contactará muy pronto.");
+      setForm({ name: "", phone: "", email: "", interest: INTERESTS[0], message: "" });
     } catch (error) {
-
-      toast.error("Ocurrió un error. Inténtalo nuevamente.");
-
+      toast.error("No pudimos enviar tu solicitud. Intenta de nuevo.");
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   return (
