@@ -300,8 +300,15 @@ async def refresh(request: Request, response: Response):
     user = await db.users.find_one({"_id": payload["sub"]})
     if not user:
         raise HTTPException(status_code=401, detail="Usuario no encontrado")
-    response.set_cookie("access_token", create_access_token(user["_id"], user["email"]),
-                        httponly=True, secure=True, samesite="lax", max_age=7200, path="/")
+    response.set_cookie(
+        "access_token",
+        create_access_token(user["_id"], user["email"]),
+        httponly=True,
+        secure=True,
+        samesite=_cookie_samesite(),
+        max_age=7200,
+        path="/",
+    )
     return {"status": "ok"}
 
 
