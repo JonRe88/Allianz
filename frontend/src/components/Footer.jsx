@@ -47,6 +47,10 @@ export const Footer = () => (
           mencionados son operados por Allianz México S.A. Las proyecciones del simulador son ilustrativas y no
           garantizan rendimientos.
         </p>
+        <p className="mt-4 text-xs font-light leading-relaxed text-white/35">
+          Las tasas de crecimiento elegidas tienen fines ilustrativos únicamente. La tasa anual proyectada está expresada antes de cargos. La ganancia real podría ser otra, ya que, debido a la naturaleza de este tipo de inversiones, su rendimiento puede indistintamente subir o bajar. Si se rescata la cuenta con anticipación, el valor estimado ilustrado le da una indicación de lo que podrá recibir, por tanto, para obtener los máximos beneficios de esta inversión, la prima debería ser
+pagada por la duración del plazo contratado. En caso de fallecimiento se entregará a los beneficiarios el monto ahorrado después de aplicar la retención de impuestos. Dicha retención actualmente es del 20%.
+        </p>
         <p className="mt-4 text-xs text-white/35">© {new Date().getFullYear()} XIMNANZAS. Todos los derechos reservados.</p>
       </div>
     </div>
