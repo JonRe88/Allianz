@@ -1,6 +1,7 @@
 const { db } = require("../lib/mongodb");
 
 const RESEND_API_URL = "https://api.resend.com/emails";
+const AGENTMAIL_API_URL = "https://api.agentmail.to/v0/inboxes/ximnanzas@agentmail.to/messages/send";
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -34,28 +35,54 @@ async function notifyOwner(lead) {
   const resendFromEmail = process.env.RESEND_FROM_EMAIL;
   const ownerEmail = process.env.OWNER_EMAIL;
 
-  if (!resendApiKey || !resendFromEmail || !ownerEmail) {
-    throw new Error("RESEND_API_KEY, RESEND_FROM_EMAIL or OWNER_EMAIL is not configured");
+  if (!ownerEmail) {
+    throw new Error("OWNER_EMAIL is not configured");
   }
 
-  const response = await fetch(RESEND_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${resendApiKey}`,
-    },
-    body: JSON.stringify({
-      from: `${process.env.EMAIL_FROM_NAME || "XIMNANZAS"} <${resendFromEmail}>`,
-      to: [ownerEmail],
-      subject: "Nuevo prospecto - XIMNANZAS",
-      html: emailTable(lead),
-      ...(process.env.EMAIL_REPLY_TO ? { reply_to: process.env.EMAIL_REPLY_TO } : {}),
-    }),
-  });
+  if (resendApiKey && resendFromEmail) {
+    const response = await fetch(RESEND_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${resendApiKey}`,
+      },
+      body: JSON.stringify({
+        from: `${process.env.EMAIL_FROM_NAME || "XIMNANZAS"} <${resendFromEmail}>`,
+        to: [ownerEmail],
+        subject: "Nuevo prospecto - XIMNANZAS",
+        html: emailTable(lead),
+        ...(process.env.EMAIL_REPLY_TO ? { reply_to: process.env.EMAIL_REPLY_TO } : {}),
+      }),
+    });
 
-  if (!response.ok) {
-    throw new Error(`Email provider returned ${response.status}`);
+    if (response.ok) return;
   }
+
+  const agentMailKey = process.env.AGENTMAIL_API_KEY;
+  if (agentMailKey) {
+    const response = await fetch(AGENTMAIL_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${agentMailKey}`,
+      },
+      body: JSON.stringify({
+        to: [ownerEmail],
+        subject: "Nuevo prospecto - XIMNANZAS",
+        text: [
+          `Nombre: ${lead.name}`,
+          `Email: ${lead.email}`,
+          `Teléfono: ${lead.phone}`,
+          `Interés: ${lead.interest}`,
+          `Mensaje: ${lead.message || "Sin mensaje"}`,
+        ].join("\n"),
+      }),
+    });
+
+    if (response.ok) return;
+  }
+
+  throw new Error("Email providers rejected the notification");
 }
 
 module.exports = async function handler(req, res) {
