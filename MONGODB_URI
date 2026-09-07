@@ -1,6 +1,6 @@
 MONGODB_URI
 MONGODB_DB=datos-ximnanzas
 EMERGENT_EMAIL_KEY
-OWNER_EMAIL
+OWNER_EMAIL=ximenalalith.allianzmlp@gmail.com
 EMAIL_FROM_NAME=XIMNANZAS
-EMAIL_REPLY_TO
+EMAIL_REPLY_TO=ximenalalith.allianzmlp@gmail.com
