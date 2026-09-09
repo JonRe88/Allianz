@@ -1,0 +1,9 @@
+.agents
+.venv
+venv
+__pycache__
+*.pyc
+.env
+pytest.ini
+skills-lock.json
+*.md
