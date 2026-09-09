@@ -184,9 +184,22 @@ def create_refresh_token(user_id: str) -> str:
     return jwt.encode(payload, get_jwt_secret(), algorithm=JWT_ALGORITHM)
 
 
+def _cookie_samesite() -> str:
+    explicit = os.environ.get("COOKIE_SAMESITE")
+    if explicit:
+        return explicit.lower()
+    # Two Vercel URLs are cross-site; browsers only send those cookies with SameSite=None.
+    return "none" if os.environ.get("VERCEL") else "lax"
+
+
 def set_auth_cookies(response: Response, access: str, refresh: str) -> None:
-    response.set_cookie("access_token", access, httponly=True, secure=True, samesite="lax", max_age=7200, path="/")
-    response.set_cookie("refresh_token", refresh, httponly=True, secure=True, samesite="lax", max_age=604800, path="/")
+    samesite = _cookie_samesite()
+    response.set_cookie(
+        "access_token", access, httponly=True, secure=True, samesite=samesite, max_age=7200, path="/",
+    )
+    response.set_cookie(
+        "refresh_token", refresh, httponly=True, secure=True, samesite=samesite, max_age=604800, path="/",
+    )
 
 
 async def get_current_user(request: Request) -> dict:
@@ -287,8 +300,15 @@ async def refresh(request: Request, response: Response):
     user = await db.users.find_one({"_id": payload["sub"]})
     if not user:
         raise HTTPException(status_code=401, detail="Usuario no encontrado")
-    response.set_cookie("access_token", create_access_token(user["_id"], user["email"]),
-                        httponly=True, secure=True, samesite="lax", max_age=7200, path="/")
+    response.set_cookie(
+        "access_token",
+        create_access_token(user["_id"], user["email"]),
+        httponly=True,
+        secure=True,
+        samesite=_cookie_samesite(),
+        max_age=7200,
+        path="/",
+    )
     return {"status": "ok"}
 
 
@@ -390,12 +410,30 @@ async def root():
     return {"message": "XIMNANZAS API"}
 
 
+def _cron_authorized(request: Request) -> bool:
+    secret = os.environ.get("CRON_SECRET")
+    if not secret:
+        return False
+    auth = request.headers.get("authorization", "")
+    return auth == f"Bearer {secret}"
+
+
+@api_router.get("/cron/reminders")
+@api_router.post("/cron/reminders")
+async def cron_reminders(request: Request):
+    if not _cron_authorized(request):
+        raise HTTPException(status_code=401, detail="No autorizado")
+    await send_due_reminders()
+    return {"ok": True}
+
+
 app.include_router(api_router)
 
 frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+extra_origins = [o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url, "http://localhost:3000"],
+    allow_origins=list(dict.fromkeys([frontend_url, "http://localhost:3000", *extra_origins])),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -441,7 +479,9 @@ async def startup():
     await db.users.create_index("email", unique=True)
     await db.login_attempts.create_index("identifier")
     await seed_admin()
-    asyncio.create_task(reminder_loop())
+    # Serverless (Vercel) has no long-lived process; reminders run via Cron.
+    if not os.environ.get("VERCEL"):
+        asyncio.create_task(reminder_loop())
 
 
 @app.on_event("shutdown")

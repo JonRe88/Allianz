@@ -1,0 +1,8 @@
+MONGODB_URI="mongodb+srv://retirement-calc-mvp:da74h1qaimpc738dq6tg@customer-apps.nwgjv3.mongodb.net/?retryWrites=true&w=majority&appName=retirement-calc-mvp&maxPoolSize=5"
+MONGODB_DB=datos-ximnanzas
+EMERGENT_EMAIL_KEY= ek_6fd23c463545fa19c025c13144a5a004
+OWNER_EMAIL=  ximenalalith.allianzmlp@gmail.com
+EMAIL_FROM_NAME= XIMNANZAS
+EMAIL_REPLY_TO= ximenalalith.allianzmlp@gmail.com
+REACT APP BACKEND URL= https://ximnanzas.com 
+WDS SOCKET PORT =443
