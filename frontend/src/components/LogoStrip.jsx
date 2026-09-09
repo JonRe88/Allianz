@@ -19,12 +19,6 @@ const LOGOS = [
     id: "logo-cnsf",
     h: "max-h-12",
   },
-  {
-    src: "/logos/cnsf.png",
-    alt: "CNSF — Comisión Nacional de Seguros y Fianzas",
-    id: "logo-cnsf",
-    h: "max-h-12",
-  },
 ];
 
 export const LogoStrip = () => (
