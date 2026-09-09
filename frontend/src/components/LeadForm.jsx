@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { api } from "@/lib/api";
+import { submitLead } from "@/lib/forms";
 
 const INTERESTS = [
   "Plan Personal de Retiro",
@@ -30,7 +30,7 @@ export const LeadForm = () => {
     }
     setLoading(true);
     try {
-      await api.post("/leads", form);
+      await submitLead(form);
       toast.success("Recibido. Un asesor te contactará muy pronto.");
       setForm({ name: "", email: "", phone: "", interest: INTERESTS[0], message: "" });
     } catch {

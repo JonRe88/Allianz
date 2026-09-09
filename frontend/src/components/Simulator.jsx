@@ -8,7 +8,7 @@ import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianG
 import { Slider } from "@/components/ui/slider";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RISK_PROFILES, PRODUCT_LIST, IMAGES } from "@/data/products";
-import { fmtMXN } from "@/lib/api";
+import { fmtMXN } from "@/lib/utils";
 
 const RETIREMENT_AGE = 65;
 

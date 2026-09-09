@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Button } from "@/components/ui/button";
 
-import { api } from "@/lib/api";
+import { submitLead } from "@/lib/forms";
 
 const HERO_IMG =
   "https://images.pexels.com/photos/36729964/pexels-photo-36729964.jpeg?auto=compress&cs=tinysrgb&w=1920";
@@ -88,7 +88,7 @@ export const Hero = () => {
     }
     setLoading(true);
     try {
-      await api.post("/leads", form);
+      await submitLead(form);
       const message = `Hola, quiero información sobre un Plan Personal de Retiro.\n\nNombre: ${form.name}\nEmail: ${form.email}\nTeléfono: ${form.phone}\nInterés: ${form.interest}\nMensaje: ${form.message || "Sin mensaje adicional"}`;
       window.open(
         `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,

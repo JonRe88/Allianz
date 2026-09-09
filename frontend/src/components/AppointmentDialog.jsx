@@ -8,7 +8,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { api } from "@/lib/api";
+import { submitAppointment } from "@/lib/forms";
 
 const TIME_SLOTS = ["10:00", "11:00", "12:00", "13:00", "16:00", "17:00", "18:00"];
 
@@ -34,7 +34,7 @@ export const AppointmentDialog = ({ open, onOpenChange }) => {
     }
     setLoading(true);
     try {
-      await api.post("/appointments", {
+      await submitAppointment({
         name: name.trim(),
         phone: phone.trim(),
         date: format(date, "yyyy-MM-dd"),
@@ -69,8 +69,8 @@ export const AppointmentDialog = ({ open, onOpenChange }) => {
               onSelect={setDate}
               locale={es}
               disabled={[{ before: new Date() }, { dayOfWeek: [0] }]}
-              data-testid="appointment-calendar"
-              className="rounded-md border border-black/10"
+              data-testid="appointment-calendar"black
+              className="rounded-md border border-/10"
             />
           </div>
           <div className="flex flex-col gap-5">
