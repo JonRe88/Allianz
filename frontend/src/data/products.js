@@ -3,7 +3,8 @@ export const WHATSAPP_URL =
 
 export const IMAGES = {
   advisor:
-    "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwxfHxtYXR1cmUlMjBwcm9mZXNzaW9uYWwlMjBidXNpbmVzc21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc4NzY4ODg3NHww&ixlib=rb-4.1.0&q=85",
+    "https://images.pexels.com/photos/5407251/pexels-photo-5407251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  
   architecture:
     "https://images.pexels.com/photos/11888495/pexels-photo-11888495.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   retirement:
