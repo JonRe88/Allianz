@@ -1,8 +1,9 @@
 import { useState } from "react";
+import import { useState } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, CalendarDays, Clock, User, Phone } from "lucide-react";
 
 import {
   Dialog,
@@ -17,6 +18,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
+// ======================================================
+// CONFIGURACIÓN
+// ======================================================
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xzebyaod";
+
+// WhatsApp XIMNANZAS
+// México +52 + número
+const WHATSAPP_NUMBER = "525951069096";
+
 // Horarios disponibles
 const TIME_SLOTS = [
   "10:00",
@@ -28,398 +39,407 @@ const TIME_SLOTS = [
   "18:00",
 ];
 
-export const AppointmentDialog = ({ open, onOpenChange }) => {
-  const [date, setDate] = useState(null);
-  const [time, setTime] = useState(null);
+export default function AppointmentDialog({
+  open,
+  onOpenChange,
+}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [date, setDate] = useState(undefined);
+  const [time, setTime] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ==========================================
-  // REINICIAR FORMULARIO
-  // ==========================================
-  const reset = () => {
-    setDate(null);
-    setTime(null);
-    setName("");
-    setPhone("");
-  };
+  // ======================================================
+  // ENVIAR CITA
+  // ======================================================
 
-  // ==========================================
-  // ENVIAR CITA A FORMSPREE
-  // ==========================================
-  const submit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación
-    if (!date || !time || !name.trim() || !phone.trim()) {
-      toast.error(
-        "Completa fecha, horario, nombre y teléfono."
-      );
+    // -----------------------------
+    // Validaciones
+    // -----------------------------
+
+    if (!name.trim()) {
+      toast.error("Ingresa tu nombre.");
+      return;
+    }
+
+    if (!phone.trim()) {
+      toast.error("Ingresa tu teléfono.");
+      return;
+    }
+
+    if (!date) {
+      toast.error("Selecciona una fecha.");
+      return;
+    }
+
+    if (!time) {
+      toast.error("Selecciona un horario.");
       return;
     }
 
     setLoading(true);
 
     try {
-      // Datos que enviaremos a Formspree
-      const formData = {
-        nombre: name.trim(),
-        telefono: phone.trim(),
+      // -----------------------------
+      // Formato de fecha
+      // -----------------------------
 
-        fecha: format(
-          date,
-          "EEEE d 'de' MMMM 'de' yyyy",
-          {
-            locale: es,
-          }
-        ),
-
-        horario: `${time} hrs`,
-
-        asunto: "Nueva solicitud de cita - Ximnanzas",
-      };
-
-      // ==========================================
-      // FORMSPREE
-      // CAMBIA TU_FORM_ID POR TU ID REAL
-      // ==========================================
-      const response = await fetch(
-        "https://formspree.io/f/xzebyaod",
+      const formattedDate = format(
+        date,
+        "EEEE d 'de' MMMM 'de' yyyy",
         {
-          method: "POST",
-
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(formData),
+          locale: es,
         }
       );
 
-      const result = await response.json();
+      // -----------------------------
+      // Datos para Formspree
+      // -----------------------------
 
-      // Si Formspree devuelve error
+      const formData = {
+        name: name.trim(),
+        phone: phone.trim(),
+        date: formattedDate,
+        time: time,
+        _subject: "Nueva cita agendada — XIMNANZAS",
+      };
+
+      // -----------------------------
+      // Enviar a Formspree
+      // -----------------------------
+
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
       if (!response.ok) {
-        throw new Error(
-          result?.error ||
-            "No se pudo enviar la solicitud."
-        );
+        throw new Error("No se pudo enviar la solicitud.");
       }
 
-      // ==========================================
-      // ÉXITO
-      // ==========================================
-      toast.success(
-        "Solicitud enviada correctamente. Te contactaremos para confirmar tu cita."
-      );
+      // ==================================================
+      // WHATSAPP
+      // ==================================================
 
-      // Cerrar modal
+      const whatsappMessage = `
+📅 *Nueva solicitud de cita — XIMNANZAS*
+
+👤 *Nombre:* ${name.trim()}
+
+📱 *Teléfono:* ${phone.trim()}
+
+📆 *Fecha:* ${formattedDate}
+
+🕐 *Horario:* ${time} hrs
+
+🌐 Solicitud enviada desde:
+ximnanzas.com
+      `.trim();
+
+      const whatsappUrl =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=` +
+        encodeURIComponent(whatsappMessage);
+
+      // -----------------------------
+      // Mensaje de éxito
+      // -----------------------------
+
+      toast.success("Solicitud enviada correctamente.", {
+        description: "Ahora podrás confirmar la cita por WhatsApp.",
+      });
+
+      // -----------------------------
+      // Abrir WhatsApp
+      // -----------------------------
+
+      window.location.href = whatsappUrl;
+
+      // -----------------------------
+      // Limpiar formulario
+      // -----------------------------
+
+      setName("");
+      setPhone("");
+      setDate(undefined);
+      setTime("");
+
       onOpenChange(false);
 
-      // Limpiar formulario
-      reset();
-
     } catch (error) {
-      console.error(
-        "Error enviando formulario:",
-        error
-      );
+      console.error("Error al enviar cita:", error);
 
-      toast.error(
-        "No pudimos enviar tu solicitud. Intenta de nuevo."
-      );
-
+      toast.error("No pudimos enviar la solicitud.", {
+        description:
+          "Verifica tu conexión e inténtalo nuevamente.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
+  // ======================================================
+  // DISABLED DATES
+  // ======================================================
+
+  const disabledDays = [
+    {
+      before: new Date(),
+    },
+    {
+      dayOfWeek: [0], // Domingo
+    },
+  ];
+
+  // ======================================================
+  // RENDER
+  // ======================================================
+
   return (
-    <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
-    >
-      <DialogContent
-        data-testid="appointment-dialog"
-        className="max-h-[90vh] overflow-y-auto rounded-none sm:max-w-2xl"
-      >
-        {/* ======================================
-            HEADER
-        ====================================== */}
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[520px]">
+
         <DialogHeader>
-          <DialogTitle
-            className="
-              font-serif
-              text-2xl
-              font-normal
-              tracking-tight
-              text-[#0A0A0A]
-            "
-          >
-            Agenda una cita
+          <DialogTitle className="text-2xl font-semibold">
+            Agenda tu cita
           </DialogTitle>
 
-          <DialogDescription
-            className="
-              text-sm
-              font-light
-              text-neutral-600
-            "
-          >
-            Elige día y horario. Un asesor certificado
-            te contactará para confirmar.
+          <DialogDescription>
+            Selecciona el día y horario que prefieras.
           </DialogDescription>
         </DialogHeader>
 
-        {/* ======================================
-            FORMULARIO
-        ====================================== */}
         <form
-          onSubmit={submit}
-          className="grid gap-8 md:grid-cols-2"
+          onSubmit={handleSubmit}
+          className="space-y-6 mt-4"
         >
-          {/* ====================================
-              CALENDARIO
-          ==================================== */}
-          <div>
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              locale={es}
 
-              // No permite fechas anteriores
-              // ni domingos
-              disabled={[
-                {
-                  before: new Date(),
-                },
-                {
-                  dayOfWeek: [0],
-                },
-              ]}
+          {/* ============================================
+              NOMBRE
+          ============================================ */}
 
-              data-testid="appointment-calendar"
+          <div className="space-y-2">
+            <Label htmlFor="appointment-name">
+              Nombre completo
+            </Label>
 
-              className="
-                rounded-md
-                border
-                border-black/10
-              "
-            />
+            <div className="relative">
+              <User
+                size={18}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              />
+
+              <Input
+                id="appointment-name"
+                type="text"
+                placeholder="Tu nombre"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="pl-10"
+                disabled={loading}
+              />
+            </div>
           </div>
 
-          {/* ====================================
-              INFORMACIÓN DE LA CITA
-          ==================================== */}
-          <div className="flex flex-col gap-5">
+          {/* ============================================
+              TELÉFONO
+          ============================================ */}
 
-            {/* ==================================
-                HORARIOS
-            ================================== */}
-            <div>
-              <p
-                className="
-                  mb-2
-                  text-xs
-                  font-semibold
-                  uppercase
-                  tracking-widest
-                  text-neutral-500
-                "
-              >
-                Horario
+          <div className="space-y-2">
+            <Label htmlFor="appointment-phone">
+              Teléfono
+            </Label>
+
+            <div className="relative">
+              <Phone
+                size={18}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              />
+
+              <Input
+                id="appointment-phone"
+                type="tel"
+                placeholder="55 1234 5678"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="pl-10"
+                disabled={loading}
+              />
+            </div>
+          </div>
+
+          {/* ============================================
+              FECHA
+          ============================================ */}
+
+          <div className="space-y-2">
+            <Label>
+              Fecha
+            </Label>
+
+            <div className="rounded-xl border p-3 flex justify-center">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                disabled={disabledDays}
+                locale={es}
+                initialFocus
+              />
+            </div>
+
+            {date && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <CalendarDays size={16} />
+
+                {format(
+                  date,
+                  "EEEE d 'de' MMMM 'de' yyyy",
+                  {
+                    locale: es,
+                  }
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* ============================================
+              HORARIO
+          ============================================ */}
+
+          <div className="space-y-2">
+            <Label>
+              Horario
+            </Label>
+
+            <div className="grid grid-cols-3 gap-2">
+              {TIME_SLOTS.map((slot) => (
+                <Button
+                  key={slot}
+                  type="button"
+                  variant={
+                    time === slot
+                      ? "default"
+                      : "outline"
+                  }
+                  onClick={() => setTime(slot)}
+                  disabled={loading}
+                  className="rounded-xl"
+                >
+                  <Clock
+                    size={16}
+                    className="mr-2"
+                  />
+
+                  {slot}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* ============================================
+              RESUMEN
+          ============================================ */}
+
+          {date && time && (
+            <div className="rounded-xl bg-muted/50 border p-4 space-y-2">
+
+              <p className="text-sm font-medium">
+                Resumen de tu cita
               </p>
 
-              <div
-                className="grid grid-cols-3 gap-2"
-                data-testid="appointment-time-slots"
-              >
-                {TIME_SLOTS.map((slot) => (
-                  <button
-                    key={slot}
-                    type="button"
+              <div className="text-sm text-muted-foreground space-y-1">
 
-                    data-testid={`time-slot-${slot.replace(
-                      ":",
-                      ""
-                    )}`}
-
-                    onClick={() =>
-                      setTime(slot)
-                    }
-
-                    className={`
-                      border
-                      px-2
-                      py-2
-                      text-sm
-                      transition-colors
-
-                      ${
-                        time === slot
-                          ? `
-                            border-[#3D1A4E]
-                            bg-[#3D1A4E]
-                            text-white
-                          `
-                          : `
-                            border-black/15
-                            text-neutral-700
-                            hover:border-[#3D1A4E]
-                            hover:text-[#3D1A4E]
-                          `
-                      }
-                    `}
-                  >
-                    {slot}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* ==================================
-                NOMBRE
-            ================================== */}
-            <div className="grid gap-2">
-              <Label htmlFor="appt-name">
-                Nombre completo
-              </Label>
-
-              <Input
-                id="appt-name"
-                data-testid="appointment-name-input"
-
-                value={name}
-
-                onChange={(e) =>
-                  setName(e.target.value)
-                }
-
-                placeholder="Tu nombre"
-
-                className="rounded-none"
-
-                required
-              />
-            </div>
-
-            {/* ==================================
-                TELÉFONO
-            ================================== */}
-            <div className="grid gap-2">
-              <Label htmlFor="appt-phone">
-                Teléfono
-              </Label>
-
-              <Input
-                id="appt-phone"
-                data-testid="appointment-phone-input"
-
-                type="tel"
-
-                value={phone}
-
-                onChange={(e) =>
-                  setPhone(e.target.value)
-                }
-
-                placeholder="55 1234 5678"
-
-                className="rounded-none"
-
-                required
-              />
-            </div>
-
-            {/* ==================================
-                RESUMEN
-            ================================== */}
-            {date && (
-              <div
-                data-testid="appointment-summary"
-                className="
-                  border-l-2
-                  border-[#3D1A4E]
-                  bg-neutral-50
-                  px-4
-                  py-3
-                  text-sm
-                  text-neutral-600
-                "
-              >
-                <p className="font-medium text-[#3D1A4E]">
-                  Tu cita
-                </p>
-
-                <p className="mt-1">
+                <p>
+                  <strong>Fecha:</strong>{" "}
                   {format(
                     date,
-                    "EEEE d 'de' MMMM 'de' yyyy",
+                    "d 'de' MMMM 'de' yyyy",
                     {
                       locale: es,
                     }
                   )}
                 </p>
 
-                {time && (
-                  <p>
-                    {time} hrs
-                  </p>
-                )}
+                <p>
+                  <strong>Horario:</strong>{" "}
+                  {time} hrs
+                </p>
+
               </div>
+            </div>
+          )}
+
+          {/* ============================================
+              BOTÓN
+          ============================================ */}
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-xl"
+          >
+
+            {loading ? (
+              <>
+                <Loader2
+                  size={18}
+                  className="mr-2 animate-spin"
+                />
+
+                Enviando...
+              </>
+            ) : (
+              <>
+                Agendar cita
+              </>
             )}
 
-            {/* ==================================
-                BOTÓN
-            ================================== */}
-            <Button
-              data-testid="appointment-submit-button"
+          </Button>
 
-              type="submit"
+          <p className="text-xs text-center text-muted-foreground">
+            Al enviar, recibirás la confirmación de tu
+            solicitud mediante WhatsApp.
+          </p>
 
-              disabled={
-                loading ||
-                !date ||
-                !time ||
-                !name.trim() ||
-                !phone.trim()
-              }
-
-              className="
-                mt-auto
-                rounded-none
-                bg-[#3D1A4E]
-                py-6
-                text-xs
-                font-semibold
-                uppercase
-                tracking-widest
-                hover:bg-[#6B3F8A]
-              "
-            >
-              {loading ? (
-                <>
-                  <Loader2
-                    className="
-                      mr-2
-                      h-4
-                      w-4
-                      animate-spin
-                    "
-                  />
-
-                  Enviando...
-                </>
-              ) : (
-                "Confirmar cita"
-              )}
-            </Button>
-          </div>
         </form>
       </DialogContent>
     </Dialog>
   );
-};
+}
+
+⚠️ Hay un detalle importante
+
+El número que me diste es:
+
+5951069096
+
+Yo lo configuré como:
+
++52 5951069096 → 525951069096
+
+Así que el WhatsApp que abrirá el formulario será:
+
+https://wa.me/525951069096
+
+El flujo quedará:
+
+Cliente selecciona fecha → selecciona hora → introduce nombre/teléfono → Agendar cita → Formspree guarda la solicitud → se abre WhatsApp → mensaje listo para enviar a XIMNANZAS.
+
+Una mejora que te recomiendo
+
+Ahora mismo el mensaje llega a WhatsApp después de que Formspree confirma el envío. Eso es bueno porque no perderás solicitudes si WhatsApp no está instalado.
+
+Si quieres que quede todavía más profesional, puedo hacer que después de enviar aparezca una pantalla:
+
+✓ Solicitud recibida
+Tu cita está casi lista
+Confirma tu cita por WhatsApp
+
+con un botón grande “Confirmar por WhatsApp”, en lugar de sacar inmediatamente al usuario de la página.
